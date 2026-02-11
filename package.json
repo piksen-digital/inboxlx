@@ -1,11 +1,11 @@
 {
-  "name": "inboxready-pro",
+  "name": "inboxlx",
   "version": "1.0.0",
-  "description": "Domain readiness & email copy compliance checker for cold emailers",
+  "description": "Domain readiness + email copy compliance checker for cold emailers",
   "main": "api/check-domain.js",
   "scripts": {
-    "dev": "node api/server.js",
-    "start": "node api/server.js"
+    "dev": "vercel dev",
+    "start": "node api/check-domain.js"
   },
   "dependencies": {
     "dns2": "^2.1.0",
@@ -16,10 +16,10 @@
     "node-fetch": "^3.3.2"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "type": "module",
   "keywords": ["cold email", "dns", "spf", "dkim", "dmarc", "whois", "spam", "compliance"],
-  "author": "InboxReady",
+  "author": "InboxLX",
   "license": "MIT"
 }
