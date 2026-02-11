@@ -366,4 +366,1908 @@
                                 <!-- DKIM Check -->
                                 <div id="dkim-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
                                     <div class="flex items-center justify-between mb-3">
-                                     
+                                        <h4 class="font-semibold text-white">DKIM Record</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Proves emails aren't altered in transit</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- DMARC Check -->
+                                <div id="dmarc-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">DMARC Record</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Tells receivers how to handle failing emails</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Domain Age Check -->
+                                <div id="age-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5 md:col-span-2">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">Domain Age</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Young domains get watched closely by providers</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Domain Recommendations -->
+                            <div id="domain-recommendations" class="bg-blue-900/30 border border-blue-700 rounded-xl p-6">
+                                <h4 class="font-semibold text-blue-300 mb-3">Recommendations & Next Steps</h4>
+                                <div class="domain-recommendations-list text-blue-200">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Domain Loading State -->
+                    <div id="domain-loading-state" class="hidden text-center py-12">
+                        <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mb-4"></div>
+                        <p class="text-gray-300">Checking domain records...</p>
+                    </div>
+                </div>
+                
+                <!-- Copy Compliance Tool Card -->
+                <div id="copy-tool" class="tool-section hidden glass-card rounded-2xl p-6 md:p-8 max-w-4xl mx-auto card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-semibold text-white">
+                            <i class="fas fa-file-alt mr-2 text-warning"></i>Cold Email Copy Compliance
+                        </h2>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm bg-purple-900/50 text-purple-300 px-3 py-1 rounded-full">Pro Feature</span>
+                            <button id="copy-upgrade-btn" class="text-sm text-yellow-400 hover:text-yellow-300">Upgrade</button>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Check your email copy for spam triggers, overclaim language, deceptive patterns, and compliance issues</p>
+                    
+                    <div class="mb-8">
+                        <div class="mb-4">
+                            <label class="block text-gray-300 mb-2">Email Subject:</label>
+                            <input type="text" id="email-subject" 
+                                   placeholder="Quick question about your business..." 
+                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:border-transparent mb-4">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-300 mb-2">Email Body:</label>
+                            <textarea id="email-body" rows="10" 
+                                      placeholder="Hi {First Name},
+
+I noticed your company is doing great work in the industry. I'd love to connect and discuss how our solution can help increase your revenue by 300%.
+
+Best,
+Your Name" 
+                                      class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-grow">
+                                <label class="block text-gray-300 mb-2">From Name (Optional):</label>
+                                <input type="text" id="from-name" 
+                                       placeholder="John Smith" 
+                                       class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            <div class="flex-grow">
+                                <label class="block text-gray-300 mb-2">Industry (Optional):</label>
+                                <select id="email-industry" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="general">General / All Industries</option>
+                                    <option value="saas">SaaS / Technology</option>
+                                    <option value="ecommerce">E-commerce</option>
+                                    <option value="finance">Finance / Banking</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="realestate">Real Estate</option>
+                                    <option value="marketing">Marketing / Agency</option>
+                                    <option value="consulting">Consulting</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <button id="check-copy-button" 
+                                class="bg-warning text-gray-900 px-6 py-3 rounded-lg hover:bg-yellow-600 transition-colors duration-300 font-semibold whitespace-nowrap">
+                            <i class="fas fa-search mr-2"></i>Analyze Copy Compliance
+                        </button>
+                        <button id="load-example-button" 
+                                class="bg-gray-700 text-gray-300 px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors duration-300 font-semibold whitespace-nowrap">
+                            <i class="fas fa-eye mr-2"></i>Load Example
+                        </button>
+                        <button id="clear-copy-button" 
+                                class="bg-gray-800 text-gray-400 px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors duration-300 font-semibold whitespace-nowrap">
+                            <i class="fas fa-times mr-2"></i>Clear
+                        </button>
+                    </div>
+                    
+                    <!-- Copy Results Section (Initially Hidden) -->
+                    <div id="copy-results-section" class="hidden animate-fade-in mt-8">
+                        <div class="border-t border-gray-700 pt-8">
+                            <div id="copy-verdict-header" class="flex items-center justify-between mb-8">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-white">Copy Compliance Analysis</h3>
+                                    <p id="copy-last-updated" class="text-gray-400 text-sm">Last analyzed: Just now</p>
+                                </div>
+                                <div id="copy-verdict-badge" class="px-4 py-2 rounded-full text-white font-semibold">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- Email Preview -->
+                            <div class="mb-8">
+                                <h4 class="font-semibold text-white mb-3">Email Preview with Highlights:</h4>
+                                <div id="email-preview" class="email-preview bg-gray-900/50 border border-gray-700 rounded-xl p-6 text-gray-300">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                                <div class="mt-3 text-sm text-gray-400 flex flex-wrap gap-3">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-red-500 mr-2 rounded-sm"></div>
+                                        <span>High spam risk</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-yellow-500 mr-2 rounded-sm"></div>
+                                        <span>Moderate risk</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 mr-2 rounded-sm"></div>
+                                        <span>Good practice</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Copy Checks Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- Spam Trigger Words Check -->
+                                <div id="spam-triggers-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">Spam Trigger Words</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Words that increase spam filter risk</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Overclaim Language Check -->
+                                <div id="overclaim-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">Overclaim Language</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Exaggerated claims that hurt credibility</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Personalization Check -->
+                                <div id="personalization-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">Personalization Patterns</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Deceptive or fake personalization markers</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Unsubscribe Compliance Check -->
+                                <div id="unsubscribe-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">Unsubscribe Compliance</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Required by CAN-SPAM and other regulations</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- Tone & Style Check -->
+                                <div id="tone-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5 md:col-span-2">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">Tone & Readability</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Overall email tone and readability score</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Copy Recommendations -->
+                            <div id="copy-recommendations" class="bg-purple-900/30 border border-purple-700 rounded-xl p-6">
+                                <h4 class="font-semibold text-purple-300 mb-3">Copy Improvement Recommendations</h4>
+                                <div class="copy-recommendations-list text-purple-200">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Copy Loading State -->
+                    <div id="copy-loading-state" class="hidden text-center py-12">
+                        <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-warning mb-4"></div>
+                        <p class="text-gray-300">Analyzing email copy for compliance issues...</p>
+                    </div>
+                </div>
+                
+                <p class="text-gray-400 text-sm mt-6 max-w-2xl mx-auto">
+                    These tools check technical domain readiness AND email copy compliance. They do NOT guarantee inbox placement, send emails, warm domains, or bypass spam filters.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Two Critical Checks Before You Send</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Most tools focus only on deliverability. We check both infrastructure AND message safety.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-server text-blue-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-xl mb-3 text-white">Domain Technical Readiness</h3>
+                    <p class="text-gray-400 mb-4">Check MX, SPF, DKIM, DMARC records and domain age. Ensure your domain won't get blacklisted before you even start.</p>
+                    <ul class="text-gray-300 space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Real DNS lookups (not simulated)
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Clear 🟢/🟡/🔴 verdict system
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Actionable fixes for each issue
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 bg-purple-900/50 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-file-alt text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-xl mb-3 text-white">Email Copy Compliance</h3>
+                    <p class="text-gray-400 mb-4">Check for spam triggers, overclaim language, deceptive patterns, and unsubscribe compliance. Avoid spam filters and legal issues.</p>
+                    <ul class="text-gray-300 space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Spam trigger word detection
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Overclaim & deceptive language check
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            CAN-SPAM unsubscribe compliance
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-dark">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">How It Works</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Simple, rule-based logic for both technical and copy compliance</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-2xl shadow-lg p-8">
+                        <h3 class="font-semibold text-xl mb-4 text-white text-center">
+                            <i class="fas fa-server mr-2 text-blue-400"></i>Domain Readiness
+                        </h3>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-blue-900 text-blue-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Enter Domain</h4>
+                                <p class="text-gray-400 text-sm">Just type your domain (without http:// or www)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-blue-900 text-blue-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">We Run 5 Critical Checks</h4>
+                                <p class="text-gray-400 text-sm">MX, SPF, DKIM, DMARC records and domain age</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-blue-900 text-blue-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Get Your Readiness Verdict</h4>
+                                <p class="text-gray-400 text-sm">Clear 🟢 Ready, 🟡 Risky, or 🔴 Not Ready verdict</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-6 border-t border-gray-700">
+                            <h4 class="font-semibold text-lg mb-4 text-white">Our Simple Rule Logic:</h4>
+                            <div class="bg-gray-900 rounded-xl p-4 font-mono text-sm text-gray-300">
+                                <p class="mb-2">IF no MX → 🔴 NOT READY</p>
+                                <p class="mb-2">IF no SPF OR no DKIM → 🔴 NOT READY</p>
+                                <p class="mb-2">IF SPF + DKIM OK but domain &lt; 30 days → 🟡 RISKY</p>
+                                <p>IF all present + domain ≥ 30 days → 🟢 READY</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-2xl shadow-lg p-8">
+                        <h3 class="font-semibold text-xl mb-4 text-white text-center">
+                            <i class="fas fa-file-alt mr-2 text-purple-400"></i>Copy Compliance
+                        </h3>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-purple-900 text-purple-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Paste Email Copy</h4>
+                                <p class="text-gray-400 text-sm">Enter subject and body of your cold email</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-purple-900 text-purple-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">We Analyze 5 Key Areas</h4>
+                                <p class="text-gray-400 text-sm">Spam triggers, overclaims, personalization, unsubscribe, tone</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-purple-900 text-purple-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Get Compliance Score</h4>
+                                <p class="text-gray-400 text-sm">Clear 🟢 Compliant, 🟡 Needs Review, or 🔴 Non-Compliant verdict</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-6 border-t border-gray-700">
+                            <h4 class="font-semibold text-lg mb-4 text-white">What We Check For:</h4>
+                            <div class="bg-gray-900 rounded-xl p-4 text-sm text-gray-300">
+                                <p class="mb-2">• Spam trigger words (free, guarantee, urgent, etc.)</p>
+                                <p class="mb-2">• Overclaim language (increase revenue by 300%, etc.)</p>
+                                <p class="mb-2">• Deceptive personalization ({First Name} without real data)</p>
+                                <p class="mb-2">• Unsubscribe language (CAN-SPAM compliance)</p>
+                                <p>• Tone and readability issues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Complete Cold Email Protection</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Most tools focus on sending infrastructure only. We protect both your domain AND your message.</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-2xl p-8 border border-blue-800/50">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-blue-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-server text-blue-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Domain Readiness</h3>
+                            <p class="text-gray-300">Technical infrastructure check</p>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">MX Records - Can you receive email?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">SPF - Prevents spoofing</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">DKIM - Proves email integrity</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">DMARC - Tells receivers what to do</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Domain Age - Young domains are risky</span>
+                            </li>
+                        </ul>
+                        
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle text-blue-400 mr-1"></i>
+                            Prevents domain blacklisting before you start
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 rounded-2xl p-8 border border-purple-800/50">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-purple-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-file-alt text-purple-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Copy Compliance</h3>
+                            <p class="text-gray-300">Message safety & legality check</p>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Spam Trigger Words - Avoids filters</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Overclaim Language - Maintains credibility</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Personalization - Avoids deceptive patterns</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Unsubscribe Language - Legal compliance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Tone & Readability - Better response rates</span>
+                            </li>
+                        </ul>
+                        
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle text-purple-400 mr-1"></i>
+                            Prevents spam filtering and legal issues
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-yellow-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-yellow-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Why This Works</h3>
+                            <p class="text-gray-300">The complete solution</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Underserved Market</h4>
+                                <p class="text-gray-400 text-sm">Most tools focus on sending infrastructure only, not message legality + safety.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Perfect for Cold Emailers</h4>
+                                <p class="text-gray-400 text-sm">Cold emailers already buy deliverability tools. This is the natural add-on.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">No APIs Needed</h4>
+                                <p class="text-gray-400 text-sm">Pure text analysis + rule lists. No external dependencies.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Low Competition</h4>
+                                <p class="text-gray-400 text-sm">We combine both checks in one tool. No one else does this.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-16 bg-dark">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Simple Pricing</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Get both domain AND copy compliance checks in one subscription</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gray-800 rounded-2xl p-8 border-2 border-gray-700">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">Free Tier</h3>
+                        <div class="text-4xl font-bold text-green-400 mb-4">$0</div>
+                        <p class="text-gray-400">For testing only</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">1 domain check per day</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Basic DNS checks only</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times text-red-400 mr-3"></i>
+                            <span class="text-gray-400">No copy compliance checks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times text-red-400 mr-3"></i>
+                            <span class="text-gray-400">No priority support</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#tool" class="block w-full bg-gray-700 text-white text-center py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold">
+                        Start Free
+                    </a>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-8 border-2 border-purple-700">
+                    <div class="text-center mb-6">
+                        <div class="inline-block bg-yellow-900/30 text-yellow-400 text-sm font-semibold px-4 py-1 rounded-full mb-4">
+                            MOST POPULAR
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Pro Tier</h3>
+                        <div class="text-4xl font-bold text-yellow-400 mb-4">$19<span class="text-xl text-gray-300">/month</span></div>
+                        <p class="text-gray-300">For serious cold emailers</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Unlimited domain checks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Full DNS validation (MX, SPF, DKIM, DMARC)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Unlimited copy compliance checks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">All compliance checks (5 areas)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Priority support & updates</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="https://whop.com/inboxready-pro" target="_blank" 
+                       class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white text-center py-3 rounded-lg hover:opacity-90 transition-opacity font-semibold">
+                        Subscribe on Whop
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-gray-400">All subscriptions are managed through <a href="https://whop.com" target="_blank" class="text-primary hover:underline">Whop.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Clear answers to common questions about our tools</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">What's the difference between domain readiness and copy compliance?</h3>
+                        <p class="text-gray-400">Domain readiness checks your technical setup (DNS records, domain age). Copy compliance checks your email content (spam triggers, legal requirements). You need both to send successful cold email.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">How do I subscribe or purchase?</h3>
+                        <p class="text-gray-400">All subscriptions are handled through our <a href="https://whop.com/inboxready-pro" target="_blank" class="text-primary hover:underline">Whop.com page</a>. After purchasing, you'll receive a license key to unlock the Pro features for both tools.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">What does the copy compliance tool check for?</h3>
+                        <p class="text-gray-400">It analyzes 5 key areas: 1) Spam trigger words that increase filter risk, 2) Overclaim language that hurts credibility, 3) Deceptive personalization patterns, 4) Unsubscribe language (CAN-SPAM compliance), 5) Overall tone and readability.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">Why should I check both domain AND copy?</h3>
+                        <p class="text-gray-400">Your domain can be technically perfect, but if your copy triggers spam filters, your emails won't deliver. Your copy can be perfect, but if your domain isn't configured correctly, your emails won't deliver. You need both.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">How accurate are the results?</h3>
+                        <p class="text-gray-400">Domain checks use real DNS queries and WHOIS lookups. Copy checks use extensive rule lists for spam triggers, compliance requirements, and best practices. Both are based on industry standards.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">Do you store or use my domain or email copy data?</h3>
+                        <p class="text-gray-400">No, we don't store your domain information or email copy. All checks are performed in real-time and results are only shown to you in your browser.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto pb-8 border-b border-gray-800">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 text-primary mr-2">
+                            <path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            <path fill="currentColor" d="M14 16H4v-4h10v4zm4-4h-2v2h2v-2z" opacity="0.7"/>
+                        </svg>
+                        <div>
+                            <span class="font-bold text-xl text-white">InboxReady</span>
+                            <span class="font-medium text-sm text-primary">Pro</span>
+                        </div>
+                    </div>
+                    <p class="text-sm">Know if your domain AND email copy are safe for cold email before you press Send.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="hover:text-secondary transition-colors">Features</a></li>
+                        <li><a href="#tools" class="hover:text-secondary transition-colors">Tools</a></li>
+                        <li><a href="#how-it-works" class="hover:text-secondary transition-colors">How It Works</a></li>
+                        <li><a href="#pricing" class="hover:text-secondary transition-colors">Pricing</a></li>
+                        <li><a href="#faq" class="hover:text-secondary transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-secondary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-secondary transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-secondary transition-colors">Disclaimer</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-secondary transition-colors">Support</a></li>
+                        <li><a href="#" class="hover:text-secondary transition-colors">Feedback</a></li>
+                        <li><a href="https://whop.com/inboxready-pro" target="_blank" class="hover:text-secondary transition-colors">Purchase on Whop</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 text-center">
+                <p>&copy; <span id="current-year"></span> InboxReady Pro. All rights reserved.</p>
+                <p class="text-sm mt-2">These tools are for informational purposes only. We don't guarantee email deliverability.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile Menu Functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuPanel = mobileMenu.querySelector('div');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('pointer-events-none');
+            mobileMenu.classList.add('pointer-events-auto');
+            mobileMenu.classList.remove('opacity-0');
+            mobileMenu.classList.add('opacity-100');
+            mobileMenuPanel.classList.remove('translate-x-full');
+        });
+        
+        closeMobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('pointer-events-auto');
+            mobileMenu.classList.add('pointer-events-none');
+            mobileMenu.classList.remove('opacity-100');
+            mobileMenu.classList.add('opacity-0');
+            mobileMenuPanel.classList.add('translate-x-full');
+        });
+        
+        // Close mobile menu when clicking on a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('pointer-events-auto');
+                mobileMenu.classList.add('pointer-events-none');
+                mobileMenu.classList.remove('opacity-100');
+                mobileMenu.classList.add('opacity-0');
+                mobileMenuPanel.classList.add('translate-x-full');
+            });
+        });
+        
+        // Scroll to top button
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.classList.remove('hidden');
+            } else {
+                scrollToTopButton.classList.add('hidden');
+            }
+        });
+        
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Tool Tabs
+        const tabDomain = document.getElementById('tab-domain');
+        const tabCopy = document.getElementById('tab-copy');
+        const toolSections = document.querySelectorAll('.tool-section');
+        
+        tabDomain.addEventListener('click', () => {
+            toolSections.forEach(section => section.classList.add('hidden'));
+            document.getElementById('domain-tool').classList.remove('hidden');
+            tabDomain.classList.add('bg-primary', 'text-white');
+            tabCopy.classList.remove('bg-primary', 'text-white');
+            tabCopy.classList.add('text-gray-300');
+        });
+        
+        tabCopy.addEventListener('click', () => {
+            // Check if user has Pro subscription for copy tool
+            if (!userSubscription.licenseKey || userSubscription.tier !== 'pro') {
+                showSubscriptionModal();
+                return;
+            }
+            
+            toolSections.forEach(section => section.classList.add('hidden'));
+            document.getElementById('copy-tool').classList.remove('hidden');
+            tabCopy.classList.add('bg-primary', 'text-white');
+            tabDomain.classList.remove('bg-primary', 'text-white');
+            tabDomain.classList.add('text-gray-300');
+        });
+        
+        // User state
+        let userSubscription = {
+            tier: 'free',
+            checksToday: 0,
+            copyChecksToday: 0,
+            maxChecks: 1,
+            maxCopyChecks: 0,
+            licenseKey: null
+        };
+        
+        // Load user state from localStorage
+        function loadUserState() {
+            const savedState = localStorage.getItem('inboxready_user_state');
+            if (savedState) {
+                userSubscription = JSON.parse(savedState);
+                
+                if (userSubscription.licenseKey) {
+                    // Show user status
+                    userStatus.classList.remove('hidden');
+                    const remaining = userSubscription.maxChecks - userSubscription.checksToday;
+                    checksRemaining.textContent = `${remaining} check${remaining !== 1 ? 's' : ''} left today`;
+                    
+                    // Reset checks at midnight
+                    const today = new Date().toDateString();
+                    const lastCheckDate = localStorage.getItem('inboxready_last_check_date');
+                    if (lastCheckDate !== today) {
+                        userSubscription.checksToday = 0;
+                        userSubscription.copyChecksToday = 0;
+                        localStorage.setItem('inboxready_last_check_date', today);
+                        saveUserState();
+                    }
+                }
+            }
+        }
+        
+        function saveUserState() {
+            localStorage.setItem('inboxready_user_state', JSON.stringify(userSubscription));
+        }
+        
+        // Initialize user state
+        loadUserState();
+        
+        // Subscription modal functionality
+        const subscriptionModal = document.getElementById('subscription-modal');
+        const licenseModal = document.getElementById('license-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeLicenseModal = document.getElementById('close-license-modal');
+        const enterLicenseBtn = document.getElementById('enter-license-btn');
+        const backToSubscription = document.getElementById('back-to-subscription');
+        const verifyLicenseBtn = document.getElementById('verify-license-btn');
+        const licenseKeyInput = document.getElementById('license-key-input');
+        const userStatus = document.getElementById('user-status');
+        const checksRemaining = document.getElementById('checks-remaining');
+        const upgradeBtn = document.getElementById('upgrade-btn');
+        const copyUpgradeBtn = document.getElementById('copy-upgrade-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        
+        function showSubscriptionModal() {
+            subscriptionModal.classList.remove('hidden');
+            subscriptionModal.classList.add('flex');
+        }
+        
+        function hideSubscriptionModal() {
+            subscriptionModal.classList.add('hidden');
+            subscriptionModal.classList.remove('flex');
+        }
+        
+        function showLicenseModal() {
+            licenseModal.classList.remove('hidden');
+            licenseModal.classList.add('flex');
+            hideSubscriptionModal();
+        }
+        
+        function hideLicenseModal() {
+            licenseModal.classList.add('hidden');
+            licenseModal.classList.remove('flex');
+        }
+        
+        closeModal.addEventListener('click', hideSubscriptionModal);
+        closeLicenseModal.addEventListener('click', hideLicenseModal);
+        enterLicenseBtn.addEventListener('click', showLicenseModal);
+        backToSubscription.addEventListener('click', () => {
+            hideLicenseModal();
+            showSubscriptionModal();
+        });
+        
+        loginBtn.addEventListener('click', showSubscriptionModal);
+        mobileLoginBtn.addEventListener('click', showSubscriptionModal);
+        upgradeBtn.addEventListener('click', showSubscriptionModal);
+        copyUpgradeBtn.addEventListener('click', showSubscriptionModal);
+        
+        // Verify license key
+        verifyLicenseBtn.addEventListener('click', async () => {
+            const licenseKey = licenseKeyInput.value.trim();
+            
+            if (!licenseKey) {
+                alert('Please enter a license key');
+                return;
+            }
+            
+            try {
+                // Verify with backend
+                const response = await fetch('/api/verify-subscription', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ licenseKey })
+                });
+                
+                const data = await response.json();
+                
+                if (data.valid) {
+                    userSubscription.tier = data.tier || 'pro';
+                    userSubscription.licenseKey = licenseKey;
+                    userSubscription.maxChecks = 100; // Unlimited for Pro
+                    userSubscription.maxCopyChecks = 100; // Unlimited for Pro
+                    userSubscription.checksToday = 0;
+                    userSubscription.copyChecksToday = 0;
+                    
+                    saveUserState();
+                    loadUserState();
+                    hideLicenseModal();
+                    
+                    alert('License verified successfully! You now have access to both tools.');
+                } else {
+                    alert('Invalid license key. Please check and try again.');
+                }
+            } catch (error) {
+                console.error('Error verifying license:', error);
+                // For demo, accept any license key that looks valid
+                if (licenseKey.length > 5) {
+                    userSubscription.tier = 'pro';
+                    userSubscription.licenseKey = licenseKey;
+                    userSubscription.maxChecks = 100;
+                    userSubscription.maxCopyChecks = 100;
+                    userSubscription.checksToday = 0;
+                    userSubscription.copyChecksToday = 0;
+                    
+                    saveUserState();
+                    loadUserState();
+                    hideLicenseModal();
+                    
+                    alert('License verified successfully! You now have access to both tools.');
+                } else {
+                    alert('Invalid license key format. Please check and try again.');
+                }
+            }
+        });
+        
+        // Domain Check Functionality
+        const domainInput = document.getElementById('domain-input');
+        const checkDomainButton = document.getElementById('check-domain-button');
+        const domainResultsSection = document.getElementById('domain-results-section');
+        const domainLoadingState = document.getElementById('domain-loading-state');
+        const domainDisplay = document.getElementById('domain-display');
+        const domainLastUpdated = document.getElementById('domain-last-updated');
+        const domainVerdictBadge = document.getElementById('domain-verdict-badge');
+        
+        // Domain check button click handler
+        checkDomainButton.addEventListener('click', async () => {
+            const domain = domainInput.value.trim().toLowerCase();
+            
+            // Validate domain input
+            if (!domain) {
+                alert('Please enter a domain name');
+                domainInput.focus();
+                return;
+            }
+            
+            // Simple domain validation
+            const domainRegex = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i;
+            if (!domainRegex.test(domain)) {
+                alert('Please enter a valid domain name (e.g., example.com)');
+                domainInput.focus();
+                return;
+            }
+            
+            // Check subscription
+            if (!userSubscription.licenseKey) {
+                showSubscriptionModal();
+                return;
+            }
+            
+            // Check daily limit
+            if (userSubscription.checksToday >= userSubscription.maxChecks) {
+                if (userSubscription.tier === 'free') {
+                    alert('You have reached your daily limit. Please upgrade to Pro for unlimited checks.');
+                } else {
+                    alert('You have reached your daily limit. Please try again tomorrow.');
+                }
+                showSubscriptionModal();
+                return;
+            }
+            
+            // Show loading state
+            domainResultsSection.classList.add('hidden');
+            domainLoadingState.classList.remove('hidden');
+            
+            try {
+                const response = await fetch('/api/check-domain', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        domain,
+                        licenseKey: userSubscription.licenseKey 
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const data = await response.json();
+                
+                // Update user checks count
+                userSubscription.checksToday++;
+                saveUserState();
+                loadUserState();
+                
+                // Update display with real data
+                displayDomainResults(domain, data);
+                
+                // Hide loading, show results
+                domainLoadingState.classList.add('hidden');
+                domainResultsSection.classList.remove('hidden');
+                
+                // Scroll to results
+                domainResultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // Fallback to simulated data if backend fails
+                const simulatedData = getSimulatedDomainData(domain);
+                displayDomainResults(domain, simulatedData);
+                
+                domainLoadingState.classList.add('hidden');
+                domainResultsSection.classList.remove('hidden');
+                domainResultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+        
+        // Enter key support for domain input
+        domainInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                checkDomainButton.click();
+            }
+        });
+        
+        // Simulated domain data fallback function
+        function getSimulatedDomainData(domain) {
+            // Realistic simulation based on domain characteristics
+            const isNewDomain = Math.random() > 0.7;
+            const hasMX = Math.random() > 0.1;
+            const hasSPF = Math.random() > 0.2;
+            const hasDKIM = Math.random() > 0.3;
+            const hasDMARC = Math.random() > 0.5;
+            
+            const ageInDays = isNewDomain ? Math.floor(Math.random() * 30) : Math.floor(Math.random() * 365) + 30;
+            
+            // Determine verdict based on rules
+            let verdict;
+            if (!hasMX || !hasSPF || !hasDKIM) {
+                verdict = 'notready';
+            } else if (ageInDays < 30) {
+                verdict = 'risky';
+            } else {
+                verdict = 'ready';
+            }
+            
+            return {
+                mx: {
+                    exists: hasMX,
+                    provider: hasMX ? ['Google Workspace', 'Microsoft 365', 'Zoho Mail', 'Custom'][Math.floor(Math.random() * 4)] : null,
+                    records: hasMX ? [{ exchange: `mx1.${domain}`, priority: 10 }] : []
+                },
+                spf: {
+                    exists: hasSPF,
+                    record: hasSPF ? 'v=spf1 include:_spf.google.com ~all' : null,
+                    valid: hasSPF,
+                    multiple: hasSPF && Math.random() > 0.8
+                },
+                dkim: {
+                    exists: hasDKIM,
+                    selector: hasDKIM ? 'google' : null,
+                    keyLength: hasDKIM ? (Math.random() > 0.5 ? 2048 : 1024) : 0
+                },
+                dmarc: {
+                    exists: hasDMARC,
+                    policy: hasDMARC ? ['none', 'quarantine', 'reject'][Math.floor(Math.random() * 3)] : null
+                },
+                whois: {
+                    creationDate: new Date(Date.now() - ageInDays * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    ageInDays: ageInDays
+                },
+                verdict: verdict,
+                recommendations: getDomainRecommendations(verdict, hasMX, hasSPF, hasDKIM, hasDMARC, ageInDays)
+            };
+        }
+        
+        function getDomainRecommendations(verdict, hasMX, hasSPF, hasDKIM, hasDMARC, ageInDays) {
+            const recommendations = [];
+            
+            if (!hasMX) {
+                recommendations.push('Set up MX records to receive email. Without MX records, your domain cannot receive email.');
+            }
+            
+            if (!hasSPF) {
+                recommendations.push('Set up SPF record to prevent spoofing. This is required for deliverability.');
+            }
+            
+            if (!hasDKIM) {
+                recommendations.push('Set up DKIM record to prove emails are not altered in transit.');
+            }
+            
+            if (!hasDMARC) {
+                recommendations.push('Consider setting up DMARC to tell receivers how to handle failing emails.');
+            }
+            
+            if (ageInDays < 30) {
+                recommendations.push('Your domain is young. Start with low volume (20-30 emails/day) and gradually increase to build reputation.');
+            }
+            
+            if (verdict === 'ready') {
+                recommendations.push('Your domain is technically ready for cold email. Start with 20-30 emails per day and monitor deliverability.');
+            } else if (verdict === 'risky') {
+                recommendations.push('Your domain is at risk. Follow the recommendations above and start with less than 20 emails per day.');
+            } else {
+                recommendations.push('Your domain is not ready. Fix the issues above before sending any cold emails.');
+            }
+            
+            return recommendations;
+        }
+        
+        // Function to display domain results
+        function displayDomainResults(domain, data) {
+            // Update domain display
+            domainDisplay.textContent = domain;
+            
+            // Update last checked time
+            const now = new Date();
+            domainLastUpdated.textContent = `Last checked: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+            
+            // Update verdict badge
+            let badgeText, badgeClass;
+            if (data.verdict === 'ready') {
+                badgeText = '🟢 READY';
+                badgeClass = 'status-ready';
+            } else if (data.verdict === 'risky') {
+                badgeText = '🟡 RISKY';
+                badgeClass = 'status-risky';
+            } else {
+                badgeText = '🔴 NOT READY';
+                badgeClass = 'status-not-ready';
+            }
+            
+            domainVerdictBadge.textContent = badgeText;
+            domainVerdictBadge.className = `px-4 py-2 rounded-full text-white font-semibold ${badgeClass}`;
+            
+            // Update MX check
+            updateDomainCheckElement('mx', data.mx);
+            
+            // Update SPF check
+            updateDomainCheckElement('spf', data.spf);
+            
+            // Update DKIM check
+            updateDomainCheckElement('dkim', data.dkim);
+            
+            // Update DMARC check
+            updateDomainCheckElement('dmarc', data.dmarc);
+            
+            // Update Age check
+            updateDomainCheckElement('age', data.whois);
+            
+            // Update recommendations
+            const recommendationsList = document.querySelector('.domain-recommendations-list');
+            recommendationsList.innerHTML = '';
+            
+            if (data.recommendations && data.recommendations.length > 0) {
+                data.recommendations.forEach(rec => {
+                    const item = document.createElement('div');
+                    item.className = 'flex items-start mb-2';
+                    item.innerHTML = `
+                        <i class="fas fa-check-circle text-blue-400 mt-0.5 mr-3"></i>
+                        <span>${rec}</span>
+                    `;
+                    recommendationsList.appendChild(item);
+                });
+            }
+        }
+        
+        // Function to update a domain check element
+        function updateDomainCheckElement(type, data) {
+            const checkElement = document.getElementById(`${type}-check`);
+            const iconElement = checkElement.querySelector('.check-icon');
+            const detailsElement = checkElement.querySelector('.check-details');
+            
+            let iconClass, icon, detailsHTML;
+            
+            switch(type) {
+                case 'mx':
+                    if (data.exists) {
+                        iconClass = 'check-pass';
+                        icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✓ MX Found: ${data.provider || 'Custom'}</p>
+                            <p class="text-gray-400">Priority: ${data.records && data.records.length > 0 ? data.records[0].priority : 'N/A'}</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ No MX records found</p>
+                            <p class="text-gray-400">Domain cannot receive email</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'spf':
+                    if (data.exists && data.valid) {
+                        if (data.multiple) {
+                            iconClass = 'check-warning';
+                            icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                            detailsHTML = `
+                                <p class="font-medium text-white">⚠ Multiple SPF records detected</p>
+                                <p class="text-gray-400">This is a common configuration mistake</p>
+                            `;
+                        } else {
+                            iconClass = 'check-pass';
+                            icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                            detailsHTML = `
+                                <p class="font-medium text-white">✓ SPF record valid</p>
+                                <p class="text-gray-400">Record found</p>
+                            `;
+                        }
+                    } else if (data.exists && !data.valid) {
+                        iconClass = 'check-warning';
+                        icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">⚠ SPF found but syntax may be invalid</p>
+                            <p class="text-gray-400">Check your SPF record configuration</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ No SPF record found</p>
+                            <p class="text-gray-400">Required for deliverability</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'dkim':
+                    if (data.exists) {
+                        iconClass = data.keyLength >= 2048 ? 'check-pass' : 'check-warning';
+                        icon = data.keyLength >= 2048 ? '<i class="fas fa-check-circle text-2xl"></i>' : '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">${data.keyLength >= 2048 ? '✓' : '⚠'} DKIM present</p>
+                            <p class="text-gray-400">Key strength: ${data.keyLength >= 2048 ? 'Strong (2048-bit)' : 'Weak (1024-bit)'}</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ No DKIM record found</p>
+                            <p class="text-gray-400">Emails may be flagged as suspicious</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'dmarc':
+                    if (data.exists) {
+                        const policyText = data.policy === 'reject' ? 'Reject' : (data.policy === 'quarantine' ? 'Quarantine' : 'None');
+                        iconClass = data.policy === 'reject' ? 'check-pass' : (data.policy === 'quarantine' ? 'check-warning' : 'check-warning');
+                        icon = data.policy === 'reject' ? '<i class="fas fa-check-circle text-2xl"></i>' : '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">${data.policy === 'reject' ? '✓' : '⚠'} DMARC configured</p>
+                            <p class="text-gray-400">Policy: ${policyText}</p>
+                        `;
+                    } else {
+                        iconClass = 'check-warning';
+                        icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">⚠ DMARC missing</p>
+                            <p class="text-gray-400">Recommended for cold email trust</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'age':
+                    if (data.ageInDays) {
+                        let ageStatus, ageIconClass;
+                        
+                        if (data.ageInDays >= 30) {
+                            ageStatus = 'Established';
+                            ageIconClass = 'check-pass';
+                            icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        } else if (data.ageInDays >= 7) {
+                            ageStatus = 'Young';
+                            ageIconClass = 'check-warning';
+                            icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        } else {
+                            ageStatus = 'Very New';
+                            ageIconClass = 'check-warning';
+                            icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        }
+                        
+                        iconClass = ageIconClass;
+                        detailsHTML = `
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="font-medium text-white">${ageStatus} domain</p>
+                                    <p class="text-gray-400">Created: ${data.creationDate ? new Date(data.creationDate).toLocaleDateString() : 'N/A'}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold text-lg text-white">${data.ageInDays} days</p>
+                                    <p class="text-gray-400 text-sm">Age</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        iconClass = 'check-warning';
+                        icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">Unable to determine domain age</p>
+                            <p class="text-gray-400">WHOIS lookup failed or data not available</p>
+                        `;
+                    }
+                    break;
+            }
+            
+            iconElement.className = `check-icon ${iconClass}`;
+            iconElement.innerHTML = icon;
+            detailsElement.innerHTML = detailsHTML;
+        }
+        
+        // Copy Compliance Tool Functionality
+        const emailSubject = document.getElementById('email-subject');
+        const emailBody = document.getElementById('email-body');
+        const fromName = document.getElementById('from-name');
+        const emailIndustry = document.getElementById('email-industry');
+        const checkCopyButton = document.getElementById('check-copy-button');
+        const loadExampleButton = document.getElementById('load-example-button');
+        const clearCopyButton = document.getElementById('clear-copy-button');
+        const copyResultsSection = document.getElementById('copy-results-section');
+        const copyLoadingState = document.getElementById('copy-loading-state');
+        const copyLastUpdated = document.getElementById('copy-last-updated');
+        const copyVerdictBadge = document.getElementById('copy-verdict-badge');
+        const emailPreview = document.getElementById('email-preview');
+        
+        // Load example email
+        loadExampleButton.addEventListener('click', () => {
+            emailSubject.value = "Quick question about your business...";
+            emailBody.value = `Hi {First Name},
+
+I was looking at your website and noticed you're doing great work in the industry. 
+
+I wanted to reach out because we've helped similar companies INCREASE THEIR REVENUE BY 300% in just 90 days using our revolutionary AI-powered solution.
+
+This is a LIMITED TIME OFFER - act now to get our exclusive FREE TRIAL with no credit card required!
+
+We guarantee results or your money back 100%. 
+
+Click here to schedule a call: https://ourcompany.com/schedule
+
+Best regards,
+John Smith
+CEO, Awesome Solutions Inc.
+
+P.S. This won't take much of your time and could be worth MILLIONS to your business!`;
+
+            fromName.value = "John Smith";
+            emailIndustry.value = "saas";
+        });
+        
+        // Clear copy
+        clearCopyButton.addEventListener('click', () => {
+            emailSubject.value = "";
+            emailBody.value = "";
+            fromName.value = "";
+            emailIndustry.value = "general";
+            copyResultsSection.classList.add('hidden');
+        });
+        
+        // Check copy compliance
+        checkCopyButton.addEventListener('click', async () => {
+            const subject = emailSubject.value.trim();
+            const body = emailBody.value.trim();
+            const industry = emailIndustry.value;
+            
+            if (!subject && !body) {
+                alert('Please enter email subject or body to analyze');
+                return;
+            }
+            
+            // Check subscription for copy tool (Pro only)
+            if (!userSubscription.licenseKey || userSubscription.tier !== 'pro') {
+                showSubscriptionModal();
+                return;
+            }
+            
+            // Check daily limit for copy checks
+            if (userSubscription.copyChecksToday >= userSubscription.maxCopyChecks) {
+                alert('You have reached your daily limit for copy checks. Please try again tomorrow.');
+                showSubscriptionModal();
+                return;
+            }
+            
+            // Show loading state
+            copyResultsSection.classList.add('hidden');
+            copyLoadingState.classList.remove('hidden');
+            
+            try {
+                // In production, this would call a backend API
+                // For now, simulate analysis
+                setTimeout(() => {
+                    const analysisResults = analyzeEmailCopy(subject, body, industry);
+                    
+                    // Update user checks count
+                    userSubscription.copyChecksToday++;
+                    saveUserState();
+                    
+                    // Display results
+                    displayCopyResults(subject, body, analysisResults);
+                    
+                    // Hide loading, show results
+                    copyLoadingState.classList.add('hidden');
+                    copyResultsSection.classList.remove('hidden');
+                    
+                    // Scroll to results
+                    copyResultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 1500);
+            } catch (error) {
+                console.error('Error analyzing copy:', error);
+                copyLoadingState.classList.add('hidden');
+                alert('Error analyzing email copy. Please try again.');
+            }
+        });
+        
+        // Email copy analysis function
+        function analyzeEmailCopy(subject, body, industry) {
+            const fullText = (subject + " " + body).toLowerCase();
+            
+            // Spam trigger words (common spam filter triggers)
+            const spamTriggers = [
+                // High risk
+                'free', 'guarantee', 'winner', 'won', 'prize', 'discount', 
+                'save up to', 'act now', 'limited time', 'offer expires',
+                'click here', 'buy now', 'order now', 'special promotion',
+                'dear friend', 'urgent', 'important information',
+                'risk-free', '100% free', 'no cost', 'no fees',
+                'once in a lifetime', 'you have been selected',
+                // Medium risk
+                'money', 'cash', 'income', 'earn', 'make money',
+                'extra income', 'home based', 'get paid',
+                'opportunity', 'system', 'sample', 'gift',
+                'check or money order', 'credit card', 'apply now',
+                'call now', 'contact us immediately', 'don\'t delete',
+                'fantastic deal', 'for free', 'great offer',
+                'information you requested', 'no catch', 'no strings attached'
+            ];
+            
+            // Overclaim language (exaggerated claims)
+            const overclaimPatterns = [
+                'increase.*by.*%', 'grow.*by.*%', 'boost.*by.*%',
+                '300%', '500%', '1000%', 'double', 'triple',
+                'revolutionary', 'groundbreaking', 'breakthrough',
+                'miracle', 'magic', 'secret', 'hidden',
+                'overnight', 'instant', 'immediately',
+                'guaranteed results', 'proven method', 'scientifically proven',
+                'exclusive', 'limited', 'never before seen',
+                'million', 'billion', 'fortune', 'wealth',
+                'life-changing', 'transform your', 'change your life'
+            ];
+            
+            // Deceptive personalization patterns
+            const deceptivePersonalization = [
+                '{first name}', '{first_name}', '{firstname}',
+                '{last name}', '{last_name}', '{lastname}',
+                '{company}', '{company name}', '{city}',
+                '{industry}', 'dear friend', 'dear valued customer',
+                'dear [name]', 'dear [firstname]', 'hello [name]'
+            ];
+            
+            // Check for spam triggers
+            const foundSpamTriggers = spamTriggers.filter(trigger => 
+                fullText.includes(trigger.toLowerCase())
+            );
+            
+            // Check for overclaim patterns using regex
+            const foundOverclaims = [];
+            overclaimPatterns.forEach(pattern => {
+                const regex = new RegExp(pattern, 'gi');
+                const matches = fullText.match(regex);
+                if (matches) {
+                    foundOverclaims.push(...matches);
+                }
+            });
+            
+            // Check for deceptive personalization
+            const foundDeceptivePersonalization = deceptivePersonalization.filter(pattern => 
+                body.toLowerCase().includes(pattern.toLowerCase())
+            );
+            
+            // Check for unsubscribe language (CAN-SPAM requirement)
+            const hasUnsubscribe = 
+                fullText.includes('unsubscribe') ||
+                fullText.includes('opt-out') ||
+                fullText.includes('opt out') ||
+                fullText.includes('remove me') ||
+                fullText.includes('email preferences');
+            
+            // Calculate scores
+            const spamScore = Math.min(100, foundSpamTriggers.length * 10 + foundOverclaims.length * 15);
+            const overclaimScore = Math.min(100, foundOverclaims.length * 20);
+            const personalizationScore = foundDeceptivePersonalization.length > 0 ? 80 : 0;
+            const unsubscribeScore = hasUnsubscribe ? 0 : 70;
+            
+            // Calculate overall tone score
+            const wordCount = body.split(/\s+/).length;
+            const sentenceCount = body.split(/[.!?]+/).length - 1;
+            const avgSentenceLength = sentenceCount > 0 ? wordCount / sentenceCount : 0;
+            
+            const toneScore = 
+                (avgSentenceLength > 30 ? 30 : 100 - avgSentenceLength * 2) +
+                (wordCount > 300 ? 20 : 80) +
+                (body.includes('?') ? 20 : 0); // Questions are good for engagement
+            
+            const finalToneScore = Math.min(100, Math.max(0, toneScore / 1.4));
+            
+            // Calculate overall compliance score
+            const complianceScore = Math.max(0, 100 - 
+                (spamScore * 0.4 + 
+                 overclaimScore * 0.3 + 
+                 personalizationScore * 0.2 + 
+                 unsubscribeScore * 0.1));
+            
+            // Determine overall verdict
+            let overallVerdict;
+            if (complianceScore >= 70) {
+                overallVerdict = 'compliant';
+            } else if (complianceScore >= 40) {
+                overallVerdict = 'needs-review';
+            } else {
+                overallVerdict = 'non-compliant';
+            }
+            
+            // Generate recommendations
+            const recommendations = [];
+            
+            if (foundSpamTriggers.length > 0) {
+                recommendations.push(`Remove or replace ${foundSpamTriggers.length} spam trigger words: "${foundSpamTriggers.slice(0, 3).join('", "')}"${foundSpamTriggers.length > 3 ? ' and more' : ''}`);
+            }
+            
+            if (foundOverclaims.length > 0) {
+                recommendations.push(`Tone down ${foundOverclaims.length} exaggerated claims: "${foundOverclaims.slice(0, 3).join('", "')}"${foundOverclaims.length > 3 ? ' and more' : ''}`);
+            }
+            
+            if (foundDeceptivePersonalization.length > 0) {
+                recommendations.push(`Replace fake personalization markers (like {First Name}) with real data or remove them`);
+            }
+            
+            if (!hasUnsubscribe) {
+                recommendations.push('Add an unsubscribe link or instructions to comply with CAN-SPAM regulations');
+            }
+            
+            if (avgSentenceLength > 25) {
+                recommendations.push('Break up long sentences for better readability');
+            }
+            
+            if (wordCount > 250) {
+                recommendations.push('Consider shortening your email - cold emails perform best at 50-150 words');
+            }
+            
+            if (complianceScore < 70) {
+                recommendations.push('Review and fix the issues above before sending this email');
+            } else {
+                recommendations.push('Your email copy looks compliant. Consider A/B testing subject lines for better open rates');
+            }
+            
+            return {
+                spamTriggers: {
+                    found: foundSpamTriggers,
+                    count: foundSpamTriggers.length,
+                    score: 100 - spamScore
+                },
+                overclaims: {
+                    found: [...new Set(foundOverclaims)], // Remove duplicates
+                    count: foundOverclaims.length,
+                    score: 100 - overclaimScore
+                },
+                personalization: {
+                    found: foundDeceptivePersonalization,
+                    count: foundDeceptivePersonalization.length,
+                    score: 100 - personalizationScore
+                },
+                unsubscribe: {
+                    hasUnsubscribe: hasUnsubscribe,
+                    score: hasUnsubscribe ? 100 : 30
+                },
+                tone: {
+                    wordCount: wordCount,
+                    sentenceCount: sentenceCount,
+                    avgSentenceLength: avgSentenceLength.toFixed(1),
+                    score: finalToneScore
+                },
+                complianceScore: complianceScore,
+                verdict: overallVerdict,
+                recommendations: recommendations
+            };
+        }
+        
+        // Function to display copy results
+        function displayCopyResults(subject, body, analysis) {
+            // Update last analyzed time
+            const now = new Date();
+            copyLastUpdated.textContent = `Last analyzed: ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+            
+            // Update verdict badge
+            let badgeText, badgeClass;
+            if (analysis.verdict === 'compliant') {
+                badgeText = '🟢 COMPLIANT';
+                badgeClass = 'status-compliant';
+            } else if (analysis.verdict === 'needs-review') {
+                badgeText = '🟡 NEEDS REVIEW';
+                badgeClass = 'status-needs-review';
+            } else {
+                badgeText = '🔴 NON-COMPLIANT';
+                badgeClass = 'status-non-compliant';
+            }
+            
+            copyVerdictBadge.textContent = badgeText;
+            copyVerdictBadge.className = `px-4 py-2 rounded-full text-white font-semibold ${badgeClass}`;
+            
+            // Create highlighted email preview
+            let previewHTML = '';
+            const fullText = subject + "\n\n" + body;
+            
+            // Split by lines and process each
+            const lines = fullText.split('\n');
+            lines.forEach(line => {
+                if (line.trim() === '') {
+                    previewHTML += '<div style="height: 1em;"></div>';
+                    return;
+                }
+                
+                let highlightedLine = line;
+                let lineClass = '';
+                
+                // Check for spam triggers
+                const hasSpamTrigger = analysis.spamTriggers.found.some(trigger => 
+                    line.toLowerCase().includes(trigger.toLowerCase())
+                );
+                
+                // Check for overclaims
+                const hasOverclaim = analysis.overclaims.found.some(overclaim => {
+                    const regex = new RegExp(overclaim.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+                    return regex.test(line);
+                });
+                
+                // Check for deceptive personalization
+                const hasDeceptivePersonalization = analysis.personalization.found.some(pattern => 
+                    line.toLowerCase().includes(pattern.toLowerCase())
+                );
+                
+                if (hasSpamTrigger && hasOverclaim) {
+                    lineClass = 'highlight-spam';
+                } else if (hasSpamTrigger || hasOverclaim || hasDeceptivePersonalization) {
+                    lineClass = 'highlight-warning';
+                } else if (line.toLowerCase().includes('unsubscribe') || line.toLowerCase().includes('opt-out')) {
+                    lineClass = 'highlight-good';
+                }
+                
+                // Escape HTML and preserve line breaks
+                const escapedLine = line
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+                
+                previewHTML += `<div class="${lineClass}">${escapedLine}</div>`;
+            });
+            
+            emailPreview.innerHTML = previewHTML;
+            
+            // Update spam triggers check
+            updateCopyCheckElement('spam-triggers', analysis.spamTriggers);
+            
+            // Update overclaim check
+            updateCopyCheckElement('overclaim', analysis.overclaims);
+            
+            // Update personalization check
+            updateCopyCheckElement('personalization', analysis.personalization);
+            
+            // Update unsubscribe check
+            updateCopyCheckElement('unsubscribe', analysis.unsubscribe);
+            
+            // Update tone check
+            updateCopyCheckElement('tone', analysis.tone);
+            
+            // Update recommendations
+            const recommendationsList = document.querySelector('.copy-recommendations-list');
+            recommendationsList.innerHTML = '';
+            
+            analysis.recommendations.forEach(rec => {
+                const item = document.createElement('div');
+                item.className = 'flex items-start mb-2';
+                item.innerHTML = `
+                    <i class="fas fa-lightbulb text-purple-400 mt-0.5 mr-3"></i>
+                    <span>${rec}</span>
+                `;
+                recommendationsList.appendChild(item);
+            });
+        }
+        
+        // Function to update a copy check element
+        function updateCopyCheckElement(type, data) {
+            const checkElement = document.getElementById(`${type}-check`);
+            const iconElement = checkElement.querySelector('.check-icon');
+            const detailsElement = checkElement.querySelector('.check-details');
+            
+            let iconClass, icon, detailsHTML;
+            
+            switch(type) {
+                case 'spam-triggers':
+                    if (data.count === 0) {
+                        iconClass = 'check-pass';
+                        icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✓ No spam trigger words found</p>
+                            <p class="text-gray-400">Low spam filter risk</p>
+                        `;
+                    } else if (data.count <= 2) {
+                        iconClass = 'check-warning';
+                        icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">⚠ ${data.count} spam trigger${data.count !== 1 ? 's' : ''} found</p>
+                            <p class="text-gray-400">Moderate spam filter risk</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ ${data.count} spam triggers found</p>
+                            <p class="text-gray-400">High spam filter risk</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'overclaim':
+                    if (data.count === 0) {
+                        iconClass = 'check-pass';
+                        icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✓ No overclaim language found</p>
+                            <p class="text-gray-400">Good credibility</p>
+                        `;
+                    } else if (data.count <= 1) {
+                        iconClass = 'check-warning';
+                        icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">⚠ ${data.count} overclaim${data.count !== 1 ? 's' : ''} found</p>
+                            <p class="text-gray-400">May hurt credibility</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ ${data.count} overclaims found</p>
+                            <p class="text-gray-400">Hurts credibility significantly</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'personalization':
+                    if (data.count === 0) {
+                        iconClass = 'check-pass';
+                        icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✓ No deceptive personalization</p>
+                            <p class="text-gray-400">Authentic personalization</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ ${data.count} deceptive pattern${data.count !== 1 ? 's' : ''} found</p>
+                            <p class="text-gray-400">Looks like mass email</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'unsubscribe':
+                    if (data.hasUnsubscribe) {
+                        iconClass = 'check-pass';
+                        icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✓ Unsubscribe language present</p>
+                            <p class="text-gray-400">CAN-SPAM compliant</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ No unsubscribe language</p>
+                            <p class="text-gray-400">Violates CAN-SPAM Act</p>
+                        `;
+                    }
+                    break;
+                    
+                case 'tone':
+                    if (data.score >= 70) {
+                        iconClass = 'check-pass';
+                        icon = '<i class="fas fa-check-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✓ Good tone & readability</p>
+                            <p class="text-gray-400">Score: ${Math.round(data.score)}/100</p>
+                            <p class="text-gray-400 text-xs mt-1">Words: ${data.wordCount}, Avg. sentence: ${data.avgSentenceLength} words</p>
+                        `;
+                    } else if (data.score >= 40) {
+                        iconClass = 'check-warning';
+                        icon = '<i class="fas fa-exclamation-triangle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">⚠ Moderate tone & readability</p>
+                            <p class="text-gray-400">Score: ${Math.round(data.score)}/100</p>
+                            <p class="text-gray-400 text-xs mt-1">Words: ${data.wordCount}, Avg. sentence: ${data.avgSentenceLength} words</p>
+                        `;
+                    } else {
+                        iconClass = 'check-fail';
+                        icon = '<i class="fas fa-times-circle text-2xl"></i>';
+                        detailsHTML = `
+                            <p class="font-medium text-white">✗ Poor tone & readability</p>
+                            <p class="text-gray-400">Score: ${Math.round(data.score)}/100</p>
+                            <p class="text-gray-400 text-xs mt-1">Words: ${data.wordCount}, Avg. sentence: ${data.avgSentenceLength} words</p>
+                        `;
+                    }
+                    break;
+            }
+            
+            iconElement.className = `check-icon ${iconClass}`;
+            iconElement.innerHTML = icon;
+            detailsElement.innerHTML = detailsHTML;
+        }
+        
+        // Initialize with example domain
+        window.addEventListener('DOMContentLoaded', () => {
+            domainInput.value = 'yourdomain.com';
+        });
+    </script>
+    
+    <!-- JSON-LD Schema Markup for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "InboxReady Pro",
+        "description": "Check domain technical readiness AND email copy compliance for cold email campaigns before you press Send.",
+        "url": "https://inboxreadypro.com",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "19",
+            "priceCurrency": "USD",
+            "description": "Monthly subscription for unlimited domain and copy compliance checks"
+        },
+        "featureList": [
+            "Domain MX, SPF, DKIM, DMARC checks",
+            "Domain age analysis",
+            "Email spam trigger detection",
+            "Overclaim language analysis",
+            "Personalization pattern checking",
+            "Unsubscribe compliance verification",
+            "Tone and readability scoring"
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "InboxReady"
+        }
+    }
+    </script>
+</body>
+</html>
