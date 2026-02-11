@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InboxLX - Domain & Copy Compliance for Cold Email</title>
+    <meta name="description" content="Check domain technical readiness AND email copy compliance for cold email campaigns. Avoid spam filters and legal issues.">
+    <meta name="keywords" content="cold email, domain check, email deliverability, SPF, DKIM, DMARC, email copy compliance, spam triggers, unsubscribe compliance">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#3B82F6',
+                        'secondary': '#10B981',
+                        'accent': '#8B5CF6',
+                        'warning': '#F59E0B',
+                        'dark': '#111827',
+                        'light': '#F9FAFB'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .header-blur {
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .status-ready {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+        
+        .status-risky {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+        
+        .status-not-ready {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        }
+        
+        .status-compliant {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+        
+        .status-needs-review {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+        
+        .status-non-compliant {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        }
+        
+        .check-pass {
+            color: #10B981;
+        }
+        
+        .check-warning {
+            color: #F59E0B;
+        }
+        
+        .check-fail {
+            color: #EF4444;
+        }
+        
+        .mobile-menu {
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .highlight-spam {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-left: 3px solid #EF4444;
+            padding-left: 8px;
+        }
+        
+        .highlight-warning {
+            background-color: rgba(245, 158, 11, 0.2);
+            border-left: 3px solid #F59E0B;
+            padding-left: 8px;
+        }
+        
+        .highlight-good {
+            background-color: rgba(16, 185, 129, 0.2);
+            border-left: 3px solid #10B981;
+            padding-left: 8px;
+        }
+        
+        .email-preview {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white font-sans">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 header-blur shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 text-primary">
+                            <path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            <path fill="currentColor" d="M14 16H4v-4h10v4zm4-4h-2v2h2v-2z" opacity="0.7"/>
+                        </svg>
+                        <div>
+                            <span class="font-bold text-xl text-white">InboxReady</span>
+                            <span class="font-medium text-sm text-primary">Pro</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-300">Features</a>
+                    <a href="#how-it-works" class="text-gray-300 hover:text-white transition-colors duration-300">How It Works</a>
+                    <a href="#tools" class="text-gray-300 hover:text-white transition-colors duration-300">Tools</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition-colors duration-300">Pricing</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors duration-300">FAQ</a>
+                    <button id="login-btn" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300">Sign In</button>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden fixed inset-0 bg-black bg-opacity-90 z-40 opacity-0 pointer-events-none">
+            <div class="absolute right-0 top-0 h-full w-64 bg-gray-900 shadow-lg transform translate-x-full transition-transform duration-300">
+                <div class="flex flex-col p-6 space-y-6">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xl text-white">Menu</span>
+                        <button id="close-mobile-menu" class="text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <a href="#features" class="text-gray-300 hover:text-white text-lg py-2">Features</a>
+                    <a href="#how-it-works" class="text-gray-300 hover:text-white text-lg py-2">How It Works</a>
+                    <a href="#tools" class="text-gray-300 hover:text-white text-lg py-2">Tools</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white text-lg py-2">Pricing</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white text-lg py-2">FAQ</a>
+                    <button id="mobile-login-btn" class="bg-primary text-white px-4 py-3 rounded-lg text-center hover:bg-blue-700">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg pt-24 pb-16 md:pt-32 md:pb-24">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-white">
+                    Don't burn your domain OR get flagged for spam
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    <span class="font-semibold text-primary">InboxLX</span> checks both domain technical readiness AND email copy compliance before you press Send.
+                </p>
+                
+                <!-- Subscription Modal (Initially Hidden) -->
+                <div id="subscription-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center p-4">
+                    <div class="glass-card rounded-2xl p-6 md:p-8 max-w-md w-full animate-fade-in">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-white">Subscription Required</h3>
+                            <button id="close-modal" class="text-gray-400 hover:text-white">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="bg-blue-900/30 border border-blue-700 rounded-xl p-4 mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-semibold">Free Tier</span>
+                                    <span class="text-green-400 font-bold">$0</span>
+                                </div>
+                                <p class="text-sm text-gray-300">1 domain check per day • Basic checks only</p>
+                            </div>
+                            
+                            <div class="bg-purple-900/30 border border-purple-700 rounded-xl p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-semibold">Pro Tier</span>
+                                    <span class="text-yellow-400 font-bold">$19/month</span>
+                                </div>
+                                <p class="text-sm text-gray-300">Unlimited domain & copy checks • All features • Priority support</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <a href="https://whop.com/inboxready-pro" target="_blank" 
+                               class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white text-center py-3 rounded-lg hover:opacity-90 transition-opacity font-semibold">
+                                Subscribe on Whop
+                            </a>
+                            
+                            <div class="text-center">
+                                <p class="text-sm text-gray-400 mb-2">Already have a subscription?</p>
+                                <button id="enter-license-btn" class="text-primary hover:text-blue-400 text-sm">
+                                    Enter License Key
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- License Key Modal -->
+                <div id="license-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center p-4">
+                    <div class="glass-card rounded-2xl p-6 md:p-8 max-w-md w-full animate-fade-in">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-white">Enter License Key</h3>
+                            <button id="close-license-modal" class="text-gray-400 hover:text-white">
+                                <i class="fas fa-times text-xl"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <input type="text" id="license-key-input" 
+                                   placeholder="XXXX-XXXX-XXXX-XXXX" 
+                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <p class="text-sm text-gray-400 mt-2">Find your license key in your Whop dashboard</p>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <button id="verify-license-btn" 
+                                    class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                                Verify License
+                            </button>
+                            
+                            <button id="back-to-subscription" 
+                                    class="w-full text-gray-400 hover:text-white text-sm">
+                                ← Back to subscription options
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tool Navigation -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-gray-800/50 rounded-lg p-1 inline-flex">
+                        <button id="tab-domain" class="px-4 py-2 rounded-md bg-primary text-white font-medium">Domain Check</button>
+                        <button id="tab-copy" class="px-4 py-2 rounded-md text-gray-300 hover:text-white font-medium">Copy Compliance</button>
+                    </div>
+                </div>
+                
+                <!-- Domain Check Tool Card -->
+                <div id="domain-tool" class="tool-section glass-card rounded-2xl p-6 md:p-8 max-w-4xl mx-auto card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-semibold text-white">
+                            <i class="fas fa-server mr-2 text-primary"></i>Domain Readiness Check
+                        </h2>
+                        <div id="user-status" class="hidden items-center space-x-2">
+                            <span id="checks-remaining" class="text-sm bg-blue-900/50 text-blue-300 px-3 py-1 rounded-full">3 checks left</span>
+                            <button id="upgrade-btn" class="text-sm text-yellow-400 hover:text-yellow-300">Upgrade</button>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">Enter your domain name to see if it's technically safe to send cold email</p>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 mb-8">
+                        <div class="flex-grow">
+                            <input type="text" id="domain-input" 
+                                   placeholder="example.com" 
+                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <p class="text-sm text-gray-400 mt-2">Don't include "http://" or "www"</p>
+                        </div>
+                        <button id="check-domain-button" 
+                                class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 font-semibold whitespace-nowrap">
+                            Check Domain
+                        </button>
+                    </div>
+                    
+                    <!-- Domain Results Section (Initially Hidden) -->
+                    <div id="domain-results-section" class="hidden animate-fade-in">
+                        <div class="border-t border-gray-700 pt-8">
+                            <div id="domain-verdict-header" class="flex items-center justify-between mb-8">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-white">Domain: <span id="domain-display" class="text-primary">example.com</span></h3>
+                                    <p id="domain-last-updated" class="text-gray-400 text-sm">Last checked: Just now</p>
+                                </div>
+                                <div id="domain-verdict-badge" class="px-4 py-2 rounded-full text-white font-semibold">
+                                    <!-- Will be populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- Domain Checks Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <!-- MX Record Check -->
+                                <div id="mx-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">MX Records</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Confirms your domain can receive email</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- SPF Check -->
+                                <div id="spf-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h4 class="font-semibold text-white">SPF Record</h4>
+                                        <div class="check-icon">
+                                            <!-- Will be populated by JS -->
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-400 text-sm mb-3">Prevents spoofing, required for deliverability</p>
+                                    <div class="check-details text-sm">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                                
+                                <!-- DKIM Check -->
+                                <div id="dkim-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                     
