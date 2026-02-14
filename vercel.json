@@ -41,5 +41,9 @@
         }
       ]
     }
-  ]
+  ],
+  "env": {
+    "WHOP_API_KEY": "@whop-api-key",
+    "WHOP_PRODUCT_ID": "@whop-product-id"
+  }
 }
