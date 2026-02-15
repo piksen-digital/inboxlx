@@ -1,5 +1,6 @@
+// api/verify-subscription.js
 export default async function handler(req, res) {
-  // Set CORS headers
+  // CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -19,85 +20,74 @@ export default async function handler(req, res) {
 
   try {
     const { licenseKey } = req.body;
-
     if (!licenseKey) {
-      return res.status(400).json({ error: 'License key is required' });
+      return res.status(400).json({ valid: false, error: 'License key is required' });
     }
 
-    // In production, verify with Whop API
-    const isValid = await verifyWithWhop(licenseKey);
-
-    if (isValid) {
+    // 1. Admin secret (internal testing only – never exposed)
+    const ADMIN_SECRET = process.env.ADMIN_SECRET;
+    if (ADMIN_SECRET && licenseKey === ADMIN_SECRET) {
+      console.log('Admin access granted');
       return res.status(200).json({
         valid: true,
         tier: 'pro',
-        message: 'License key verified successfully'
-      });
-    } else {
-      return res.status(401).json({
-        valid: false,
-        message: 'Invalid license key'
+        admin: true,
+        message: 'Admin access'
       });
     }
-  } catch (error) {
-    console.error('Subscription verification error:', error);
-    res.status(500).json({ 
-      error: 'Failed to verify subscription',
-      details: error.message 
-    });
-  }
-}
 
-async function verifyWithWhop(licenseKey) {
-  try {
-    // Mock Whop API integration
-    // In production, replace with actual Whop API call
+    // 2. Production: require Whop credentials
     const WHOP_API_KEY = process.env.WHOP_API_KEY;
     const WHOP_PRODUCT_ID = process.env.WHOP_PRODUCT_ID;
 
     if (!WHOP_API_KEY || !WHOP_PRODUCT_ID) {
-      console.warn('Whop API credentials not configured, using demo mode');
-      // Demo mode: accept any license key
-      return licenseKey.length > 5;
+      console.error('Whop API credentials not configured');
+      return res.status(500).json({
+        valid: false,
+        error: 'License service not configured'
+      });
     }
 
-    const response = await fetch('https://api.whop.com/api/v2/licenses/validate', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${WHOP_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        license_key: licenseKey,
-        product_id: WHOP_PRODUCT_ID
-      })
-    });
+    // 3. Verify with Whop API – no fallback
+    try {
+      const response = await fetch('https://api.whop.com/api/v2/licenses/validate', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${WHOP_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          license_key: licenseKey,
+          product_id: WHOP_PRODUCT_ID
+        })
+      });
 
-    if (response.ok) {
+      if (!response.ok) {
+        // Log but don't leak internal details
+        console.error(`Whop API error: ${response.status}`);
+        return res.status(401).json({ valid: false, error: 'Invalid license key' });
+      }
+
       const data = await response.json();
-      return data.valid === true && data.status === 'active';
+
+      if (data.valid === true && data.status === 'active') {
+        return res.status(200).json({
+          valid: true,
+          tier: 'pro',
+          message: 'License verified'
+        });
+      } else {
+        return res.status(401).json({ valid: false, error: 'Invalid or inactive license' });
+      }
+    } catch (error) {
+      console.error('Whop API connection error:', error);
+      return res.status(503).json({ valid: false, error: 'License service unavailable' });
     }
-
-    return false;
   } catch (error) {
-    console.error('Whop API error:', error);
-    // Fallback to demo mode
-    return licenseKey.length > 5;
+    console.error('Subscription verification error:', error);
+    res.status(500).json({ valid: false, error: 'Internal server error' });
   }
-}
-```
-
-## 5. Vercel Configuration - vercel.json
-
-```json
-{
-  "functions": {
-    "api/check-domain.js": {
-      "maxDuration": 30,
-      "memory": 1024
-    },
-    "api/verify-subscription.js": {
-      "maxDuration": 10,
+}      "maxDuration": 10,
       "memory": 512
     }
   },
