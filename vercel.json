@@ -53,12 +53,5 @@
         }
       ]
     }
-  ],
-  "env": {
-    "SUPABASE_URL": "@supabase-url",
-    "SUPABASE_ANON_KEY": "@supabase-anon-key",
-    "GEMINI_API_KEY": "@gemini-api-key",
-    "WHOP_API_KEY": "@whop-api-key",
-    "WHOP_PRODUCT_ID": "@whop-product-id"
-  }
+  ]
 }
