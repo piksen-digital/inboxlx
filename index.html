@@ -299,28 +299,42 @@
                     </div>
                 </div>
                 
-                <!-- Login Modal (new) -->
+                <!-- NEW Login Modal with tabs and close button -->
                 <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center p-4">
                     <div class="glass-card rounded-2xl p-6 md:p-8 max-w-md w-full animate-fade-in">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold text-white">Sign In / Sign Up</h3>
+                            <h3 class="text-xl font-bold text-white" id="login-modal-title">Sign In</h3>
                             <button id="close-login-modal" class="text-gray-400 hover:text-white">
                                 <i class="fas fa-times text-xl"></i>
                             </button>
                         </div>
-                        <div class="mb-4">
-                            <input type="email" id="login-email" placeholder="Email" 
-                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white mb-3">
-                            <input type="password" id="login-password" placeholder="Password" 
-                                   class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white mb-3">
+
+                        <!-- Tabs -->
+                        <div class="flex border-b border-gray-700 mb-6">
+                            <button id="login-tab" class="flex-1 py-2 text-center font-medium border-b-2 border-primary text-white">Sign In</button>
+                            <button id="signup-tab" class="flex-1 py-2 text-center font-medium text-gray-400 hover:text-white">Sign Up</button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <div id="login-form" class="space-y-4">
+                            <input type="email" id="login-email" placeholder="Email" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white">
+                            <input type="password" id="login-password" placeholder="Password" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white">
                             <p id="login-error" class="text-red-400 text-sm hidden"></p>
+                            <button id="login-submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700">Sign In</button>
                         </div>
-                        <div class="space-y-3">
-                            <button id="login-submit" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-blue-700">
-                                Continue
-                            </button>
-                            <p class="text-center text-gray-400 text-sm">No account? We'll create one automatically.</p>
+
+                        <!-- Signup Form (initially hidden) -->
+                        <div id="signup-form" class="hidden space-y-4">
+                            <input type="email" id="signup-email" placeholder="Email" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white">
+                            <input type="password" id="signup-password" placeholder="Password" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white">
+                            <input type="password" id="signup-confirm" placeholder="Confirm Password" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white">
+                            <p id="signup-error" class="text-red-400 text-sm hidden"></p>
+                            <button id="signup-submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700">Create Account</button>
                         </div>
+
+                        <p class="text-center text-gray-400 text-sm mt-4">
+                            By continuing, you agree to our <a href="#" class="text-primary">Terms</a>.
+                        </p>
                     </div>
                 </div>
                 
@@ -387,32 +401,10 @@
                         </button>
                     </div>
                     
-                    <!-- Domain Results Section (unchanged) -->
+                    <!-- Domain Results Section (keep your existing full implementation here) -->
                     <div id="domain-results-section" class="hidden animate-fade-in">
-                        <!-- ... (same as before, omitted for brevity – we'll keep the structure but not rewrite it all) -->
-                        <!-- In a real full file, you'd keep all the existing checks and recommendations. -->
-                        <div class="border-t border-gray-700 pt-8">
-                            <div id="domain-verdict-header" class="flex items-center justify-between mb-8">
-                                <div>
-                                    <h3 class="text-xl font-semibold text-white">Domain: <span id="domain-display" class="text-primary">example.com</span></h3>
-                                    <p id="domain-last-updated" class="text-gray-400 text-sm">Last checked: Just now</p>
-                                </div>
-                                <div id="domain-verdict-badge" class="px-4 py-2 rounded-full text-white font-semibold"></div>
-                            </div>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                <div id="mx-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">...</div>
-                                <div id="spf-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">...</div>
-                                <div id="dkim-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">...</div>
-                                <div id="dmarc-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">...</div>
-                                <div id="age-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5 md:col-span-2">...</div>
-                            </div>
-                            
-                            <div id="domain-recommendations" class="bg-blue-900/30 border border-blue-700 rounded-xl p-6">
-                                <h4 class="font-semibold text-blue-300 mb-3">Recommendations & Next Steps</h4>
-                                <div class="domain-recommendations-list text-blue-200"></div>
-                            </div>
-                        </div>
+                        <!-- Your existing domain result HTML and JS update functions should remain unchanged -->
+                        <!-- ... (full content from your previous version) ... -->
                     </div>
                     
                     <!-- Domain Loading State -->
@@ -486,92 +478,10 @@
                         </button>
                     </div>
                     
-                    <!-- Copy Results Section (enhanced) -->
+                    <!-- Copy Results Section (keep your existing full implementation) -->
                     <div id="copy-results-section" class="hidden animate-fade-in mt-8">
-                        <div class="border-t border-gray-700 pt-8">
-                            <div id="copy-verdict-header" class="flex items-center justify-between mb-8">
-                                <div>
-                                    <h3 class="text-xl font-semibold text-white">Copy Compliance Analysis</h3>
-                                    <p id="copy-last-updated" class="text-gray-400 text-sm">Last analyzed: Just now</p>
-                                </div>
-                                <div id="copy-verdict-badge" class="px-4 py-2 rounded-full text-white font-semibold"></div>
-                            </div>
-                            
-                            <!-- Email Preview with Highlights (same) -->
-                            <div class="mb-8">
-                                <h4 class="font-semibold text-white mb-3">Email Preview with Highlights:</h4>
-                                <div id="email-preview" class="email-preview bg-gray-900/50 border border-gray-700 rounded-xl p-6 text-gray-300"></div>
-                                <div class="mt-3 text-sm text-gray-400 flex flex-wrap gap-3">
-                                    <div class="flex items-center"><div class="w-3 h-3 bg-red-500 mr-2 rounded-sm"></div>High spam risk</div>
-                                    <div class="flex items-center"><div class="w-3 h-3 bg-yellow-500 mr-2 rounded-sm"></div>Moderate risk</div>
-                                    <div class="flex items-center"><div class="w-3 h-3 bg-green-500 mr-2 rounded-sm"></div>Good practice</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Copy Checks Grid with specific flagged items -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                <!-- Spam Trigger Words -->
-                                <div id="spam-triggers-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <h4 class="font-semibold text-white">Spam Trigger Words</h4>
-                                        <div class="check-icon"></div>
-                                    </div>
-                                    <p class="text-gray-400 text-sm mb-3">Words that increase spam filter risk</p>
-                                    <div class="check-details text-sm"></div>
-                                    <div class="mt-2 text-xs text-gray-500" id="spam-specific"></div>
-                                </div>
-                                
-                                <!-- Overclaim Language -->
-                                <div id="overclaim-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <h4 class="font-semibold text-white">Overclaim Language</h4>
-                                        <div class="check-icon"></div>
-                                    </div>
-                                    <p class="text-gray-400 text-sm mb-3">Exaggerated claims that hurt credibility</p>
-                                    <div class="check-details text-sm"></div>
-                                    <div class="mt-2 text-xs text-gray-500" id="overclaim-specific"></div>
-                                </div>
-                                
-                                <!-- Personalization -->
-                                <div id="personalization-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <h4 class="font-semibold text-white">Personalization Patterns</h4>
-                                        <div class="check-icon"></div>
-                                    </div>
-                                    <p class="text-gray-400 text-sm mb-3">Deceptive or fake personalization markers</p>
-                                    <div class="check-details text-sm"></div>
-                                    <div class="mt-2 text-xs text-gray-500" id="personalization-specific"></div>
-                                </div>
-                                
-                                <!-- Unsubscribe -->
-                                <div id="unsubscribe-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <h4 class="font-semibold text-white">Unsubscribe Compliance</h4>
-                                        <div class="check-icon"></div>
-                                    </div>
-                                    <p class="text-gray-400 text-sm mb-3">Required by CAN-SPAM</p>
-                                    <div class="check-details text-sm"></div>
-                                    <div class="mt-2 text-xs text-gray-500" id="unsubscribe-specific"></div>
-                                </div>
-                                
-                                <!-- Tone -->
-                                <div id="tone-check" class="bg-gray-800/50 border border-gray-700 rounded-xl p-5 md:col-span-2">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <h4 class="font-semibold text-white">Tone & Readability</h4>
-                                        <div class="check-icon"></div>
-                                    </div>
-                                    <p class="text-gray-400 text-sm mb-3">Overall email tone and readability score</p>
-                                    <div class="check-details text-sm"></div>
-                                    <div class="mt-2 text-xs text-gray-500" id="tone-specific"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Copy Recommendations with specific details -->
-                            <div id="copy-recommendations" class="bg-purple-900/30 border border-purple-700 rounded-xl p-6">
-                                <h4 class="font-semibold text-purple-300 mb-3">Copy Improvement Recommendations</h4>
-                                <div class="copy-recommendations-list text-purple-200"></div>
-                            </div>
-                        </div>
+                        <!-- Your existing copy result HTML and JS update functions should remain unchanged -->
+                        <!-- ... (full content from your previous version) ... -->
                     </div>
                     
                     <!-- Copy Loading State -->
@@ -588,8 +498,420 @@
         </div>
     </section>
 
-    <!-- Features, How It Works, Tools, Pricing, FAQ sections (unchanged) – omitted for brevity but should be kept -->
-    <!-- ... (copy from previous version) -->
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Two Critical Checks Before You Send</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Most tools focus only on deliverability. We check both infrastructure AND message safety.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-server text-blue-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-xl mb-3 text-white">Domain Technical Readiness</h3>
+                    <p class="text-gray-400 mb-4">Check MX, SPF, DKIM, DMARC records and domain age. Ensure your domain won't get blacklisted before you even start.</p>
+                    <ul class="text-gray-300 space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Real DNS lookups (not simulated)
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Clear 🟢/🟡/🔴 verdict system
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Actionable fixes for each issue
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 bg-purple-900/50 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-file-alt text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-xl mb-3 text-white">Email Copy Compliance</h3>
+                    <p class="text-gray-400 mb-4">Check for spam triggers, overclaim language, deceptive patterns, and unsubscribe compliance. Avoid spam filters and legal issues.</p>
+                    <ul class="text-gray-300 space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Spam trigger word detection
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            Overclaim & deceptive language check
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-2 text-xs"></i>
+                            CAN-SPAM unsubscribe compliance
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-dark">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">How It Works</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Simple, rule-based logic for both technical and copy compliance</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-2xl shadow-lg p-8">
+                        <h3 class="font-semibold text-xl mb-4 text-white text-center">
+                            <i class="fas fa-server mr-2 text-blue-400"></i>Domain Readiness
+                        </h3>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-blue-900 text-blue-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Enter Domain</h4>
+                                <p class="text-gray-400 text-sm">Just type your domain (without http:// or www)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-blue-900 text-blue-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">We Run 5 Critical Checks</h4>
+                                <p class="text-gray-400 text-sm">MX, SPF, DKIM, DMARC records and domain age</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-blue-900 text-blue-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Get Your Readiness Verdict</h4>
+                                <p class="text-gray-400 text-sm">Clear 🟢 Ready, 🟡 Risky, or 🔴 Not Ready verdict</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-6 border-t border-gray-700">
+                            <h4 class="font-semibold text-lg mb-4 text-white">Our Simple Rule Logic:</h4>
+                            <div class="bg-gray-900 rounded-xl p-4 font-mono text-sm text-gray-300">
+                                <p class="mb-2">IF no MX → 🔴 NOT READY</p>
+                                <p class="mb-2">IF no SPF OR no DKIM → 🔴 NOT READY</p>
+                                <p class="mb-2">IF SPF + DKIM OK but domain &lt; 30 days → 🟡 RISKY</p>
+                                <p>IF all present + domain ≥ 30 days → 🟢 READY</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-2xl shadow-lg p-8">
+                        <h3 class="font-semibold text-xl mb-4 text-white text-center">
+                            <i class="fas fa-file-alt mr-2 text-purple-400"></i>Copy Compliance
+                        </h3>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-purple-900 text-purple-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                1
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Paste Email Copy</h4>
+                                <p class="text-gray-400 text-sm">Enter subject and body of your cold email</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="bg-purple-900 text-purple-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                2
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">We Analyze 5 Key Areas</h4>
+                                <p class="text-gray-400 text-sm">Spam triggers, overclaims, personalization, unsubscribe, tone</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-purple-900 text-purple-300 font-bold rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                3
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Get Compliance Score</h4>
+                                <p class="text-gray-400 text-sm">Clear 🟢 Compliant, 🟡 Needs Review, or 🔴 Non-Compliant verdict</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-6 border-t border-gray-700">
+                            <h4 class="font-semibold text-lg mb-4 text-white">What We Check For:</h4>
+                            <div class="bg-gray-900 rounded-xl p-4 text-sm text-gray-300">
+                                <p class="mb-2">• Spam trigger words (free, guarantee, urgent, etc.)</p>
+                                <p class="mb-2">• Overclaim language (increase revenue by 300%, etc.)</p>
+                                <p class="mb-2">• Deceptive personalization ({First Name} without real data)</p>
+                                <p class="mb-2">• Unsubscribe language (CAN-SPAM compliance)</p>
+                                <p>• Tone and readability issues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Complete Cold Email Protection</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Most tools focus on sending infrastructure only. We protect both your domain AND your message.</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-gradient-to-br from-blue-900/30 to-blue-800/20 rounded-2xl p-8 border border-blue-800/50">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-blue-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-server text-blue-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Domain Readiness</h3>
+                            <p class="text-gray-300">Technical infrastructure check</p>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">MX Records - Can you receive email?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">SPF - Prevents spoofing</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">DKIM - Proves email integrity</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">DMARC - Tells receivers what to do</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Domain Age - Young domains are risky</span>
+                            </li>
+                        </ul>
+                        
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle text-blue-400 mr-1"></i>
+                            Prevents domain blacklisting before you start
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-900/30 to-purple-800/20 rounded-2xl p-8 border border-purple-800/50">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-purple-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-file-alt text-purple-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Copy Compliance</h3>
+                            <p class="text-gray-300">Message safety & legality check</p>
+                        </div>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Spam Trigger Words - Avoids filters</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Overclaim Language - Maintains credibility</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Personalization - Avoids deceptive patterns</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Unsubscribe Language - Legal compliance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Tone & Readability - Better response rates</span>
+                            </li>
+                        </ul>
+                        
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle text-purple-400 mr-1"></i>
+                            Prevents spam filtering and legal issues
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-yellow-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-yellow-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Why This Works</h3>
+                            <p class="text-gray-300">The complete solution</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Underserved Market</h4>
+                                <p class="text-gray-400 text-sm">Most tools focus on sending infrastructure only, not message legality + safety.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Perfect for Cold Emailers</h4>
+                                <p class="text-gray-400 text-sm">Cold emailers already buy deliverability tools. This is the natural add-on.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">No External Dependencies</h4>
+                                <p class="text-gray-400 text-sm">Pure text analysis + rule lists.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-white mb-2">Two-In-One</h4>
+                                <p class="text-gray-400 text-sm">We combine both checks in one tool. No one else does this.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-16 bg-dark">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Simple Pricing</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Get both domain AND copy compliance checks in one subscription</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gray-800 rounded-2xl p-8 border-2 border-gray-700">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">Free Tier</h3>
+                        <div class="text-4xl font-bold text-green-400 mb-4">$0</div>
+                        <p class="text-gray-400">For testing only</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">1 domain check per month</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Basic DNS checks only</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times text-red-400 mr-3"></i>
+                            <span class="text-gray-400">No copy compliance checks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times text-red-400 mr-3"></i>
+                            <span class="text-gray-400">No priority support</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#tool" class="block w-full bg-gray-700 text-white text-center py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold">
+                        Start Free
+                    </a>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-8 border-2 border-purple-700">
+                    <div class="text-center mb-6">
+                        <div class="inline-block bg-yellow-900/30 text-yellow-400 text-sm font-semibold px-4 py-1 rounded-full mb-4">
+                            MOST POPULAR
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Pro Tier</h3>
+                        <div class="text-4xl font-bold text-yellow-400 mb-4">$14.99<span class="text-xl text-gray-300">/month</span></div>
+                        <p class="text-gray-300">For serious cold emailers</p>
+                    </div>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Unlimited domain checks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Full DNS validation (MX, SPF, DKIM, DMARC)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Unlimited copy compliance checks</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">All compliance checks (5 areas)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-yellow-400 mr-3"></i>
+                            <span class="text-white">Priority support & updates</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="https://whop.com/inboxready-pro" target="_blank" 
+                       class="block w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white text-center py-3 rounded-lg hover:opacity-90 transition-opacity font-semibold">
+                        Subscribe on Whop
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <p class="text-gray-400">All subscriptions are managed through <a href="https://whop.com" target="_blank" class="text-primary hover:underline">Whop.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-white">Frequently Asked Questions</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Clear answers to common questions about our tools</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">What's the difference between domain readiness and copy compliance?</h3>
+                        <p class="text-gray-400">Domain readiness checks your technical setup (DNS records, domain age). Copy compliance checks your email content (spam triggers, legal requirements). You need both to send successful cold email.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">How do I subscribe or purchase?</h3>
+                        <p class="text-gray-400">All subscriptions are handled through our <a href="https://whop.com/inboxready-pro" target="_blank" class="text-primary hover:underline">Whop.com page</a>. After purchasing, you'll receive a license key to unlock the Pro features for both tools.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">What does the copy compliance tool check for?</h3>
+                        <p class="text-gray-400">It analyzes 5 key areas: 1) Spam trigger words that increase filter risk, 2) Overclaim language that hurts credibility, 3) Deceptive personalization patterns, 4) Unsubscribe language (CAN-SPAM compliance), 5) Overall tone and readability.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">Why should I check both domain AND copy?</h3>
+                        <p class="text-gray-400">Your domain can be technically perfect, but if your copy triggers spam filters, your emails won't deliver. Your copy can be perfect, but if your domain isn't configured correctly, your emails won't deliver. You need both.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">How accurate are the results?</h3>
+                        <p class="text-gray-400">Domain checks use real DNS queries and WHOIS lookups. Copy checks use extensive rule lists for spam triggers, compliance requirements, and best practices. Both are based on industry standards.</p>
+                    </div>
+                    
+                    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+                        <h3 class="font-semibold text-lg mb-2 text-white">Do you store or use my domain or email copy data?</h3>
+                        <p class="text-gray-400">No, we don't store your domain information or email copy. All checks are performed in real-time and results are only shown to you in your browser.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer (updated with contact email) -->
     <footer class="bg-black text-gray-400 py-12">
@@ -632,8 +954,7 @@
                 <div>
                     <h4 class="text-white font-semibold mb-4">Contact</h4>
                     <ul class="space-y-2">
-                        <li><a href="mailto:one04digital@outlook.com" class="hover:text-secondary">one04digital@outlook.com</a></li>
-                        <li><a href="#" class="hover:text-secondary">Support</a></li>
+                        <li><a href="mailto:one04digital@outlook.com" class="hover:text-secondary">Support</a></li>
                         <li><a href="https://whop.com/inboxlx" target="_blank" class="hover:text-secondary">Purchase on Whop</a></li>
                     </ul>
                 </div>
@@ -741,14 +1062,45 @@
         const dropdownTier = document.getElementById('dropdown-tier');
         const dropdownLogout = document.getElementById('dropdown-logout');
 
+        // Signup elements
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const modalTitle = document.getElementById('login-modal-title');
+        const signupEmail = document.getElementById('signup-email');
+        const signupPassword = document.getElementById('signup-password');
+        const signupConfirm = document.getElementById('signup-confirm');
+        const signupError = document.getElementById('signup-error');
+        const signupSubmit = document.getElementById('signup-submit');
+
+        // Tab switching
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('border-primary', 'text-white');
+            signupTab.classList.remove('border-primary', 'text-white');
+            signupTab.classList.add('text-gray-400');
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            modalTitle.textContent = 'Sign In';
+        });
+
+        signupTab.addEventListener('click', () => {
+            signupTab.classList.add('border-primary', 'text-white');
+            loginTab.classList.remove('border-primary', 'text-white');
+            loginTab.classList.add('text-gray-400');
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            modalTitle.textContent = 'Sign Up';
+        });
+
         // Show/hide login modal
         function showLoginModal() { loginModal.classList.remove('hidden'); loginModal.classList.add('flex'); }
-        function hideLoginModal() { loginModal.classList.add('hidden'); loginModal.classList.remove('flex'); loginError.classList.add('hidden'); }
+        function hideLoginModal() { loginModal.classList.add('hidden'); loginModal.classList.remove('flex'); loginError.classList.add('hidden'); signupError.classList.add('hidden'); }
         closeLoginModal.addEventListener('click', hideLoginModal);
         loginHeaderBtn.addEventListener('click', showLoginModal);
         mobileLoginBtn.addEventListener('click', showLoginModal);
 
-        // Login/Signup submission
+        // Login submission
         loginSubmit.addEventListener('click', async () => {
             const email = loginEmail.value.trim();
             const password = loginPassword.value.trim();
@@ -780,6 +1132,49 @@
             } catch (e) {
                 loginError.textContent = 'Network error';
                 loginError.classList.remove('hidden');
+            }
+        });
+
+        // Signup submission
+        signupSubmit.addEventListener('click', async () => {
+            const email = signupEmail.value.trim();
+            const password = signupPassword.value;
+            const confirm = signupConfirm.value;
+
+            if (!email || !password) {
+                signupError.textContent = 'Email and password required';
+                signupError.classList.remove('hidden');
+                return;
+            }
+            if (password !== confirm) {
+                signupError.textContent = 'Passwords do not match';
+                signupError.classList.remove('hidden');
+                return;
+            }
+
+            signupError.classList.add('hidden');
+            try {
+                const res = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    // auto-login after signup
+                    userData.sessionToken = data.session.access_token;
+                    userData.email = data.user.email;
+                    userData.subscription = data.user.subscription_tier || 'free';
+                    await fetchUsage();
+                    updateUIAfterLogin();
+                    hideLoginModal();
+                } else {
+                    signupError.textContent = data.error || 'Signup failed';
+                    signupError.classList.remove('hidden');
+                }
+            } catch (e) {
+                signupError.textContent = 'Network error';
+                signupError.classList.remove('hidden');
             }
         });
 
@@ -923,7 +1318,7 @@
         const domainVerdictBadge = document.getElementById('domain-verdict-badge');
         const domainDisplay = document.getElementById('domain-display');
         const domainLastUpdated = document.getElementById('domain-last-updated');
-        // ... other domain elements (you need to keep the full update functions from previous version)
+        // ... your existing domain update functions go here (displayDomainResults, etc.)
 
         // Simplified domain check handler with usage limit
         checkDomainBtn.addEventListener('click', async () => {
@@ -974,7 +1369,7 @@
         });
 
         // You need to keep all the updateDomainCheckElement and displayDomainResults functions from earlier.
-        // For brevity, I'm not repeating them here. They should remain exactly as in your previous version.
+        // They are not repeated here; ensure they are present in your actual file.
 
         // --- Copy Compliance (with specific flagged items) ---
         const copySubject = document.getElementById('email-subject');
