@@ -973,11 +973,12 @@
     </button>
 
     <script>
-        // --- Mobile Menu, Scroll-to-top, Year (as before) ---
+                // Mobile Menu Functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const closeMobileMenuButton = document.getElementById('close-mobile-menu');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuPanel = mobileMenu.querySelector('div');
+        
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.remove('pointer-events-none');
             mobileMenu.classList.add('pointer-events-auto');
@@ -985,6 +986,7 @@
             mobileMenu.classList.add('opacity-100');
             mobileMenuPanel.classList.remove('translate-x-full');
         });
+        
         closeMobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.remove('pointer-events-auto');
             mobileMenu.classList.add('pointer-events-none');
@@ -992,6 +994,8 @@
             mobileMenu.classList.add('opacity-0');
             mobileMenuPanel.classList.add('translate-x-full');
         });
+        
+        // Close mobile menu when clicking on a link
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('pointer-events-auto');
@@ -1002,14 +1006,24 @@
             });
         });
         
+        // Scroll to top button
         const scrollToTopButton = document.getElementById('scroll-to-top');
+        
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) scrollToTopButton.classList.remove('hidden');
-            else scrollToTopButton.classList.add('hidden');
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.classList.remove('hidden');
+            } else {
+                scrollToTopButton.classList.add('hidden');
+            }
         });
-        scrollToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
+        
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
         // --- Tool Tabs (unchanged) ---
         const tabDomain = document.getElementById('tab-domain');
         const tabCopy = document.getElementById('tab-copy');
