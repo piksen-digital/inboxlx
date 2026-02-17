@@ -6,7 +6,7 @@ const supabase = createClient(
 );
 
 export default async function handler(req, res) {
-  // CORS headers (same as above)
+  // CORS headers (same as before)
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -29,7 +29,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Sign up the user
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -39,7 +38,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: error.message });
     }
 
-    // Create a profile record for the new user
+    // Create a profile record (or rely on DB trigger)
     const { error: profileError } = await supabase
       .from('profiles')
       .insert([
@@ -53,7 +52,6 @@ export default async function handler(req, res) {
 
     if (profileError) {
       console.error('Profile creation error:', profileError);
-      // Optionally delete the auth user if profile fails? For now, log.
     }
 
     return res.status(200).json({
