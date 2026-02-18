@@ -85,43 +85,6 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error('Subscription verification error:', error);
-    res.status(500).json({ valid: false, error: 'Internal server error' });
+    return res.status(500).json({ valid: false, error: 'Internal server error' });
   }
-}      "maxDuration": 10,
-      "memory": 512
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
-      ]
-    }
-  ]
 }
