@@ -1299,47 +1299,32 @@
 verifyLicense.addEventListener('click', async () => {
   const key = licenseInput.value.trim();
   if (!key) return alert('Enter license key');
-  
-  try {
-    const res = await fetch('/api/verify-subscription', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ licenseKey: key })
-    });
-    const data = await res.json();
-    
-    if (data.valid) {
-      userData.subscription = 'pro';
-      userData.licenseKey = key;
-      
-      if (userData.sessionToken) {
-        // Update server
-        await fetch('/api/usage/update-subscription', {
-          method: 'POST',
-          headers: { 
-            'Authorization': `Bearer ${userData.sessionToken}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ tier: 'pro', licenseKey: key })
-        });
-        
-        // Refresh usage data – this will set domainChecksLimit = 9999 etc.
-        await fetchUsage();
-      }
-      
-      hideLicenseModal();
-      alert('Pro activated!');
-      updateUIAfterLogin(); // updates badge to "Unlimited"
-      
-      // Optional: switch to copy tab if that was the intention
-      // Simulate click on copy tab
-      document.getElementById('tab-copy').click();
-    } else {
-      alert('Invalid license key');
+  const res = await fetch('/api/verify-subscription', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ licenseKey: key })
+  });
+  const data = await res.json();
+  console.log('License verification response:', data);
+  if (data.valid) {
+    userData.subscription = 'pro';
+    userData.licenseKey = key;
+    if (userData.sessionToken) {
+      await fetch('/api/usage/update-subscription', {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${userData.sessionToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tier: 'pro', licenseKey: key })
+      });
     }
-  } catch (err) {
-    console.error('License verification error:', err);
-    alert('Verification failed. Check console.');
+    hideLicenseModal();
+    alert('Pro activated!');
+    updateUIAfterLogin(); // refresh badge
+    // Also update userData on server if needed? The backend should already have updated profile.
+  } else {
+    alert('Invalid license key');
   }
 });
 
