@@ -1292,37 +1292,39 @@
         upgradeBtn?.addEventListener('click', showSubscriptionModal);
         copyUpgradeBtn?.addEventListener('click', showSubscriptionModal);
 
-        // Verify license (calls /api/verify-subscription)
-        verifyLicense.addEventListener('click', async () => {
-            const key = licenseInput.value.trim();
-            if (!key) return alert('Enter license key');
-            const res = await fetch('/api/verify-subscription', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ licenseKey: key })
-            });
-            const data = await res.json();
-            if (data.valid) {
-                userData.subscription = 'pro';
-                userData.licenseKey = key;
-                if (userData.sessionToken) {
-                    // also update on server via /api/usage/update-subscription
-                    await fetch('/api/usage/update-subscription', {
-                        method: 'POST',
-                        headers: { 
-                            'Authorization': `Bearer ${userData.sessionToken}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ tier: 'pro', licenseKey: key })
-                    });
-                }
-                hideLicenseModal();
-                alert('Pro activated!');
-                updateUIAfterLogin(); // refresh badge
-            } else {
-                alert('Invalid license key');
-            }
-        });
+        // Verify license
+verifyLicense.addEventListener('click', async () => {
+  const key = licenseInput.value.trim();
+  if (!key) return alert('Enter license key');
+  const res = await fetch('/api/verify-subscription', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ licenseKey: key })
+  });
+  const data = await res.json();
+  if (data.valid) {
+    userData.subscription = 'pro';
+    userData.licenseKey = key;
+    if (userData.sessionToken) {
+      // update server
+      await fetch('/api/usage/update-subscription', {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${userData.sessionToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tier: 'pro', licenseKey: key })
+      });
+      // refresh usage data from server
+      await fetchUsage();
+    }
+    hideLicenseModal();
+    alert('Pro activated!');
+    updateUIAfterLogin(); // now shows unlimited badge
+  } else {
+    alert('Invalid license key');
+  }
+});
 
         // --- Domain Check (with usage tracking) ---
         const domainInput = document.getElementById('domain-input');
