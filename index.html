@@ -1386,8 +1386,156 @@ verifyLicense.addEventListener('click', async () => {
             }
         });
 
-        // You need to keep all the updateDomainCheckElement and displayDomainResults functions from earlier.
-        // They are not repeated here; ensure they are present in your actual file.
+        // ==================== DOMAIN DISPLAY FUNCTIONS ====================
+
+function updateCheckElement(elementId, status, message, details = '') {
+  const container = document.getElementById(elementId);
+  if (!container) return;
+  
+  const iconEl = container.querySelector('.check-icon');
+  const detailsEl = container.querySelector('.check-details');
+  const specificEl = container.querySelector('.specific-items'); // optional
+
+  // Clear previous content
+  if (iconEl) {
+    iconEl.innerHTML = ''; // will be replaced by status class
+  }
+  if (detailsEl) {
+    detailsEl.innerHTML = message;
+  }
+  if (specificEl) {
+    specificEl.innerHTML = details;
+  }
+
+  // Remove existing status classes
+  container.classList.remove('check-pass', 'check-warning', 'check-fail');
+  
+  // Apply new status class and update icon
+  if (status === 'pass') {
+    container.classList.add('check-pass');
+    if (iconEl) iconEl.innerHTML = '<i class="fas fa-check-circle text-green-500"></i>';
+  } else if (status === 'warning') {
+    container.classList.add('check-warning');
+    if (iconEl) iconEl.innerHTML = '<i class="fas fa-exclamation-triangle text-yellow-500"></i>';
+  } else if (status === 'fail') {
+    container.classList.add('check-fail');
+    if (iconEl) iconEl.innerHTML = '<i class="fas fa-times-circle text-red-500"></i>';
+  }
+}
+
+function displayDomainResults(domain, data) {
+  // Update header
+  document.getElementById('domain-display').textContent = domain;
+  document.getElementById('domain-last-updated').textContent = `Last checked: ${new Date().toLocaleTimeString()}`;
+
+  // Process MX records
+  const mx = data.mx || [];
+  const mxStatus = mx.length > 0 ? 'pass' : 'fail';
+  const mxMessage = mx.length > 0 ? `${mx.length} MX record(s) found` : 'No MX records found';
+  const mxDetails = mx.map(m => `Priority ${m.priority}: ${m.exchange}`).join('<br>');
+  updateCheckElement('mx-check', mxStatus, mxMessage, mxDetails);
+
+  // Process SPF
+  const spf = data.spf;
+  let spfStatus, spfMessage, spfDetails;
+  if (spf) {
+    if (spf.includes('?all') || spf.includes('~all')) {
+      spfStatus = 'warning';
+      spfMessage = 'SPF record exists but uses softfail/neutral';
+    } else if (spf.includes('-all')) {
+      spfStatus = 'pass';
+      spfMessage = 'SPF record exists with hardfail';
+    } else {
+      spfStatus = 'warning';
+      spfMessage = 'SPF record exists but may not be strict';
+    }
+    spfDetails = spf;
+  } else {
+    spfStatus = 'fail';
+    spfMessage = 'No SPF record found';
+    spfDetails = '';
+  }
+  updateCheckElement('spf-check', spfStatus, spfMessage, spfDetails);
+
+  // Process DKIM
+  const dkim = data.dkim;
+  if (dkim && dkim.record) {
+    updateCheckElement('dkim-check', 'pass', `DKIM record found (selector: ${dkim.selector})`, dkim.record);
+  } else {
+    updateCheckElement('dkim-check', 'fail', 'No DKIM record found (common selectors checked)', '');
+  }
+
+  // Process DMARC
+  const dmarc = data.dmarc;
+  if (dmarc) {
+    let dmarcStatus = 'pass';
+    let dmarcMessage = 'DMARC record found';
+    if (dmarc.includes('p=none')) dmarcMessage += ' (policy: none)';
+    else if (dmarc.includes('p=quarantine')) dmarcMessage += ' (policy: quarantine)';
+    else if (dmarc.includes('p=reject')) dmarcMessage += ' (policy: reject)';
+    updateCheckElement('dmarc-check', dmarcStatus, dmarcMessage, dmarc);
+  } else {
+    updateCheckElement('dmarc-check', 'fail', 'No DMARC record found', '');
+  }
+
+  // Process Domain Age
+  const age = data.age;
+  let ageStatus, ageMessage, ageDetails;
+  if (age && age.ageDays !== null) {
+    if (age.ageDays < 30) {
+      ageStatus = 'fail';
+      ageMessage = 'Domain is too new (< 30 days)';
+    } else if (age.ageDays < 90) {
+      ageStatus = 'warning';
+      ageMessage = 'Domain is less than 90 days old';
+    } else {
+      ageStatus = 'pass';
+      ageMessage = 'Domain age is good';
+    }
+    ageDetails = `Created: ${age.creationDate} (${age.ageDays} days ago)`;
+  } else {
+    ageStatus = 'warning';
+    ageMessage = 'Could not determine domain age';
+    ageDetails = '';
+  }
+  updateCheckElement('age-check', ageStatus, ageMessage, ageDetails);
+
+  // Overall verdict
+  const failCount = [mxStatus, spfStatus, dkimStatus, dmarcStatus, ageStatus].filter(s => s === 'fail').length;
+  const warningCount = [mxStatus, spfStatus, dkimStatus, dmarcStatus, ageStatus].filter(s => s === 'warning').length;
+  
+  let verdictClass, verdictText;
+  if (failCount === 0 && warningCount === 0) {
+    verdictClass = 'status-ready';
+    verdictText = '✅ READY';
+  } else if (failCount === 0 && warningCount <= 2) {
+    verdictClass = 'status-risky';
+    verdictText = '⚠️ RISKY';
+  } else {
+    verdictClass = 'status-not-ready';
+    verdictText = '❌ NOT READY';
+  }
+  
+  const verdictBadge = document.getElementById('domain-verdict-badge');
+  verdictBadge.textContent = verdictText;
+  verdictBadge.className = `px-4 py-2 rounded-full text-white font-semibold ${verdictClass}`;
+
+  // Recommendations
+  const recsList = document.querySelector('.domain-recommendations-list');
+  if (recsList) {
+    let recs = [];
+    if (mxStatus === 'fail') recs.push('Add MX records to receive email (optional for sending only).');
+    if (spfStatus === 'fail') recs.push('Publish an SPF record to authorize your sending servers.');
+    if (spfStatus === 'warning') recs.push('Consider using "-all" for stricter SPF policy.');
+    if (dkimStatus === 'fail') recs.push('Set up DKIM signing for your sending domain.');
+    if (dmarcStatus === 'fail') recs.push('Add a DMARC record to control unauthenticated email handling.');
+    if (ageStatus === 'fail') recs.push('Your domain is very new. Warm up slowly to avoid spam filters.');
+    if (ageStatus === 'warning') recs.push('Domain under 90 days – be cautious with cold email volume.');
+    if (recs.length === 0) recs.push('Your domain configuration looks good!');
+    
+    recsList.innerHTML = recs.map(r => `<div class="flex items-start mb-2"><i class="fas fa-lightbulb text-blue-400 mt-0.5 mr-3"></i><span>${r}</span></div>`).join('');
+  }
+}
 
         // --- Copy Compliance (with specific flagged items) ---
         const copySubject = document.getElementById('email-subject');
