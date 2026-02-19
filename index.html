@@ -1493,22 +1493,31 @@ verifyLicense.addEventListener('click', async () => {
             copyLastUpdated.textContent = `Last analyzed: ${new Date().toLocaleTimeString()}`;
         }
 
-        checkCopyBtn.addEventListener('click', () => {
-            if (!userData.sessionToken || userData.subscription !== 'pro') {
-                showSubscriptionModal();
-                return;
-            }
-            const subject = copySubject.value.trim();
-            const body = copyBody.value.trim();
-            if (!subject && !body) return alert('Enter subject or body');
-            copyLoading.classList.remove('hidden');
-            copyResults.classList.add('hidden');
-            setTimeout(() => {
-                analyzeEmailCopy(subject, body);
-                copyLoading.classList.add('hidden');
-                copyResults.classList.remove('hidden');
-            }, 1000);
-        });
+        checkCopyBtn.addEventListener('click', async () => {
+  if (!userData.sessionToken || userData.subscription !== 'pro') {
+    showSubscriptionModal();
+    return;
+  }
+  const subject = copySubject.value.trim();
+  const body = copyBody.value.trim();
+  if (!subject && !body) return alert('Enter subject or body');
+  
+  copyLoading.classList.remove('hidden');
+  copyResults.classList.add('hidden');
+  
+  // Simulate async operation (replace with actual API call later)
+  setTimeout(() => {
+    try {
+      analyzeEmailCopy(subject, body);
+    } catch (e) {
+      console.error('Analysis error:', e);
+      alert('Analysis failed. Check console for details.');
+    } finally {
+      copyLoading.classList.add('hidden');
+      copyResults.classList.remove('hidden');
+    }
+  }, 1000);
+});
 
         // Load example
         document.getElementById('load-example-button').addEventListener('click', () => {
